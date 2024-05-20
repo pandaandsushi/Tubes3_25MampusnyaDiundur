@@ -11,7 +11,6 @@ namespace WinFormsApp1.Toggle
         {
             this.MinimumSize = new System.Drawing.Size(65, 22);
             this.buttonText = "Select Image";
-            this.Click += ButtonOval_Click; 
         }
 
         public void setButtonText(string text)
@@ -19,19 +18,6 @@ namespace WinFormsApp1.Toggle
             this.buttonText = text;
         }
 
-        private void ButtonOval_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image Files (*.png;*.jpg)|*.png;*.jpg|All files (*.*)|*.*";
-            openFileDialog.FilterIndex = 1;
-            openFileDialog.RestoreDirectory = true;
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string selectedFileName = openFileDialog.FileName;
-                // Do something with the selected file TODO
-            }
-        }
 
         protected override void OnPaint(PaintEventArgs pevent)
         {

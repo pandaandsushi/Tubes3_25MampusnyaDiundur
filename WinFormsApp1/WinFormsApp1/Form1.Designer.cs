@@ -52,6 +52,9 @@ namespace WinFormsApp1
             label10 = new Label();
             panel3 = new Panel();
             label11 = new Label();
+            pictureBox6 = new PictureBox();
+            label12 = new Label();
+            label13 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel2.SuspendLayout();
@@ -59,6 +62,7 @@ namespace WinFormsApp1
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
             panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             SuspendLayout();
             // 
             // pictureBox2
@@ -66,7 +70,7 @@ namespace WinFormsApp1
             pictureBox2.BorderStyle = BorderStyle.FixedSingle;
             pictureBox2.Location = new Point(72, 349);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(267, 304);
+            pictureBox2.Size = new Size(433, 389);
             pictureBox2.TabIndex = 6;
             pictureBox2.TabStop = false;
             // 
@@ -134,7 +138,7 @@ namespace WinFormsApp1
             // toggle2
             // 
             toggle2.AutoSize = true;
-            toggle2.Location = new Point(347, 364);
+            toggle2.Location = new Point(537, 408);
             toggle2.MinimumSize = new Size(20, 10);
             toggle2.Name = "toggle2";
             toggle2.Size = new Size(100, 29);
@@ -144,7 +148,7 @@ namespace WinFormsApp1
             // 
             // buttonOval2
             // 
-            buttonOval2.Location = new Point(72, 675);
+            buttonOval2.Location = new Point(154, 758);
             buttonOval2.MinimumSize = new Size(65, 22);
             buttonOval2.Name = "buttonOval2";
             buttonOval2.Size = new Size(267, 34);
@@ -154,7 +158,7 @@ namespace WinFormsApp1
             // 
             // search1
             // 
-            search1.Location = new Point(474, 364);
+            search1.Location = new Point(710, 404);
             search1.MinimumSize = new Size(65, 22);
             search1.Name = "search1";
             search1.Size = new Size(146, 34);
@@ -165,9 +169,9 @@ namespace WinFormsApp1
             // pictureBox3
             // 
             pictureBox3.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox3.Location = new Point(413, 349);
+            pictureBox3.Location = new Point(657, 349);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(267, 304);
+            pictureBox3.Size = new Size(434, 389);
             pictureBox3.TabIndex = 16;
             pictureBox3.TabStop = false;
             // 
@@ -177,7 +181,7 @@ namespace WinFormsApp1
             label8.BackColor = Color.Tan;
             label8.Font = new Font("Century Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = SystemColors.WindowText;
-            label8.Location = new Point(39, 27);
+            label8.Location = new Point(39, 23);
             label8.Name = "label8";
             label8.Size = new Size(60, 22);
             label8.TabIndex = 17;
@@ -187,13 +191,15 @@ namespace WinFormsApp1
             // panel2
             // 
             panel2.BackColor = Color.Tan;
+            panel2.Controls.Add(label13);
+            panel2.Controls.Add(label12);
             panel2.Controls.Add(label9);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(search1);
             panel2.Controls.Add(toggle2);
-            panel2.Location = new Point(374, 297);
+            panel2.Location = new Point(614, 301);
             panel2.Name = "panel2";
-            panel2.Size = new Size(648, 412);
+            panel2.Size = new Size(910, 491);
             panel2.TabIndex = 18;
             // 
             // label9
@@ -202,7 +208,7 @@ namespace WinFormsApp1
             label9.BackColor = Color.Tan;
             label9.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.ForeColor = SystemColors.WindowText;
-            label9.Location = new Point(334, 52);
+            label9.Location = new Point(517, 86);
             label9.Name = "label9";
             label9.Size = new Size(74, 21);
             label9.TabIndex = 22;
@@ -238,7 +244,7 @@ namespace WinFormsApp1
             label2.BackColor = Color.FromArgb(219, 132, 90);
             label2.Font = new Font("Century Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = SystemColors.WindowText;
-            label2.Location = new Point(642, 50);
+            label2.Location = new Point(1116, 50);
             label2.Name = "label2";
             label2.Size = new Size(408, 22);
             label2.TabIndex = 4;
@@ -271,7 +277,7 @@ namespace WinFormsApp1
             panel1.BackColor = Color.FromArgb(219, 132, 90);
             panel1.Location = new Point(1, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1074, 58);
+            panel1.Size = new Size(1577, 58);
             panel1.TabIndex = 21;
             // 
             // label10
@@ -280,7 +286,7 @@ namespace WinFormsApp1
             label10.BackColor = Color.FromArgb(219, 132, 90);
             label10.Font = new Font("Century Gothic", 6F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label10.ForeColor = Color.White;
-            label10.Location = new Point(11, 14);
+            label10.Location = new Point(70, 14);
             label10.Name = "label10";
             label10.Size = new Size(183, 17);
             label10.TabIndex = 22;
@@ -291,9 +297,9 @@ namespace WinFormsApp1
             panel3.BackColor = Color.FromArgb(219, 132, 90);
             panel3.Controls.Add(label11);
             panel3.Controls.Add(label10);
-            panel3.Location = new Point(1, 739);
+            panel3.Location = new Point(1, 845);
             panel3.Name = "panel3";
-            panel3.Size = new Size(1074, 52);
+            panel3.Size = new Size(1577, 52);
             panel3.TabIndex = 22;
             // 
             // label11
@@ -302,19 +308,55 @@ namespace WinFormsApp1
             label11.BackColor = Color.FromArgb(219, 132, 90);
             label11.Font = new Font("Century Gothic", 6F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label11.ForeColor = Color.White;
-            label11.Location = new Point(1003, 14);
+            label11.Location = new Point(1518, 14);
             label11.Name = "label11";
             label11.Size = new Size(46, 17);
             label11.TabIndex = 23;
             label11.Text = "@2024";
+            // 
+            // pictureBox6
+            // 
+            pictureBox6.Image = Properties.Resources.Water_Scarcity_removebg_preview;
+            pictureBox6.Location = new Point(1131, 16);
+            pictureBox6.Name = "pictureBox6";
+            pictureBox6.Size = new Size(661, 136);
+            pictureBox6.TabIndex = 23;
+            pictureBox6.TabStop = false;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.BackColor = Color.Tan;
+            label12.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label12.ForeColor = SystemColors.WindowText;
+            label12.Location = new Point(517, 322);
+            label12.Name = "label12";
+            label12.Size = new Size(144, 21);
+            label12.TabIndex = 23;
+            label12.Text = "Waktu Eksekusi:";
+            label12.Click += label12_Click;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.BackColor = Color.Tan;
+            label13.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label13.ForeColor = SystemColors.WindowText;
+            label13.Location = new Point(710, 322);
+            label13.Name = "label13";
+            label13.Size = new Size(166, 21);
+            label13.TabIndex = 24;
+            label13.Text = "Tingkat kemiripan:";
+            label13.Click += label13_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AntiqueWhite;
-            ClientSize = new Size(1073, 779);
+            ClientSize = new Size(1577, 894);
             Controls.Add(label2);
+            Controls.Add(pictureBox6);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             Controls.Add(panel1);
@@ -343,12 +385,13 @@ namespace WinFormsApp1
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private PictureBox pictureBox2;
+        public PictureBox pictureBox2;
         private Label label3;
         private Label label4;
         private Label label5;
@@ -370,5 +413,8 @@ namespace WinFormsApp1
         private Label label10;
         private Panel panel3;
         private Label label11;
+        private PictureBox pictureBox6;
+        private Label label12;
+        private Label label13;
     }
 }
