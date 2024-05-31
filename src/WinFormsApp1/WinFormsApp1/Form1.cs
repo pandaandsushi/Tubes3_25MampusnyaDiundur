@@ -6,6 +6,8 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using WinFormsApp1.Algorithm;
+using MySql.Data.MySqlClient;
 
 namespace WinFormsApp1
 {
@@ -45,7 +47,18 @@ namespace WinFormsApp1
                 // Display the binary string in a TextBox
                 textBox1.Text = binaryString;
                 textBox2.Text = asciiString;
+                PerformPatternMatching(asciiString);
             }
+        }
+        private void PerformPatternMatching(string text)
+        {
+            string pattern = "yourPatternHere"; // Replace with the pattern you want to search for
+
+            // Use Boyer-Moore algorithm
+            BoyerMooreAlgorithm.BMSearch(pattern, text);
+
+            // Use KMP algorithm
+            KMPAlgorithm.KMPSearch(pattern, text);
         }
         private string ConvertBinaryToAscii(string binaryString)
         {
@@ -198,6 +211,16 @@ namespace WinFormsApp1
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

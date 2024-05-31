@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\WinFormsApp1",
+    "\\src\\WinFormsApp1\\WinFormsApp1"
   ],
-  "SelectedNode": "\\D:\\Tubes Stima 3",
+  "SelectedNode": "\\src\\WinFormsApp1\\WinFormsApp1\\Form1.cs",
   "PreviewInSolutionExplorer": false
 }

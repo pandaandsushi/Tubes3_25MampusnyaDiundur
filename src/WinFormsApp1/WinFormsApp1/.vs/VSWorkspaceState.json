@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\obj",
+    "\\obj\\Release\\net8.0-windows",
     "\\Properties",
     "\\Resources"
   ],
-  "SelectedNode": "\\Form1.Designer.cs",
+  "SelectedNode": "\\obj\\WinFormsApp1.csproj.nuget.dgspec.json",
   "PreviewInSolutionExplorer": false
 }

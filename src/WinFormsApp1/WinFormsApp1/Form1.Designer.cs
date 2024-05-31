@@ -57,6 +57,16 @@ namespace WinFormsApp1
             pictureBox6 = new PictureBox();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
+            label14 = new Label();
+            label15 = new Label();
+            label16 = new Label();
+            label17 = new Label();
+            label18 = new Label();
+            label19 = new Label();
+            label20 = new Label();
+            label21 = new Label();
+            label22 = new Label();
+            label23 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel2.SuspendLayout();
@@ -193,6 +203,16 @@ namespace WinFormsApp1
             // panel2
             // 
             panel2.BackColor = Color.Tan;
+            panel2.Controls.Add(label20);
+            panel2.Controls.Add(label21);
+            panel2.Controls.Add(label22);
+            panel2.Controls.Add(label23);
+            panel2.Controls.Add(label19);
+            panel2.Controls.Add(label18);
+            panel2.Controls.Add(label17);
+            panel2.Controls.Add(label16);
+            panel2.Controls.Add(label15);
+            panel2.Controls.Add(label14);
             panel2.Controls.Add(label13);
             panel2.Controls.Add(label12);
             panel2.Controls.Add(label9);
@@ -210,7 +230,7 @@ namespace WinFormsApp1
             label13.BackColor = Color.Tan;
             label13.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label13.ForeColor = SystemColors.WindowText;
-            label13.Location = new Point(710, 322);
+            label13.Location = new Point(43, 457);
             label13.Name = "label13";
             label13.Size = new Size(166, 21);
             label13.TabIndex = 24;
@@ -223,7 +243,7 @@ namespace WinFormsApp1
             label12.BackColor = Color.Tan;
             label12.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label12.ForeColor = SystemColors.WindowText;
-            label12.Location = new Point(517, 322);
+            label12.Location = new Point(290, 457);
             label12.Name = "label12";
             label12.Size = new Size(144, 21);
             label12.TabIndex = 23;
@@ -236,11 +256,11 @@ namespace WinFormsApp1
             label9.BackColor = Color.Tan;
             label9.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.ForeColor = SystemColors.WindowText;
-            label9.Location = new Point(517, 86);
+            label9.Location = new Point(517, 48);
             label9.Name = "label9";
-            label9.Size = new Size(74, 21);
+            label9.Size = new Size(44, 21);
             label9.TabIndex = 22;
-            label9.Text = "Name: ";
+            label9.Text = "NIK:";
             label9.Click += label9_Click;
             // 
             // pictureBox4
@@ -368,6 +388,128 @@ namespace WinFormsApp1
             textBox2.Size = new Size(483, 258);
             textBox2.TabIndex = 25;
             // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.BackColor = Color.Tan;
+            label14.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label14.ForeColor = SystemColors.WindowText;
+            label14.Location = new Point(517, 75);
+            label14.Name = "label14";
+            label14.Size = new Size(74, 21);
+            label14.TabIndex = 25;
+            label14.Text = "Name: ";
+            label14.Click += label14_Click;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.BackColor = Color.Tan;
+            label15.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label15.ForeColor = SystemColors.WindowText;
+            label15.Location = new Point(517, 104);
+            label15.Name = "label15";
+            label15.Size = new Size(122, 21);
+            label15.TabIndex = 26;
+            label15.Text = "Tempatlahir: ";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.BackColor = Color.Tan;
+            label16.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label16.ForeColor = SystemColors.WindowText;
+            label16.Location = new Point(517, 131);
+            label16.Name = "label16";
+            label16.Size = new Size(119, 21);
+            label16.TabIndex = 27;
+            label16.Text = "Tanggallahir:";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.BackColor = Color.Tan;
+            label17.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label17.ForeColor = SystemColors.WindowText;
+            label17.Location = new Point(517, 159);
+            label17.Name = "label17";
+            label17.Size = new Size(126, 21);
+            label17.TabIndex = 28;
+            label17.Text = "JenisKelamin:";
+            label17.Click += label17_Click;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.BackColor = Color.Tan;
+            label18.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label18.ForeColor = SystemColors.WindowText;
+            label18.Location = new Point(517, 186);
+            label18.Name = "label18";
+            label18.Size = new Size(75, 21);
+            label18.TabIndex = 29;
+            label18.Text = "Goldar:";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.BackColor = Color.Tan;
+            label19.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label19.ForeColor = SystemColors.WindowText;
+            label19.Location = new Point(517, 211);
+            label19.Name = "label19";
+            label19.Size = new Size(81, 21);
+            label19.TabIndex = 30;
+            label19.Text = "Alamat:";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.BackColor = Color.Tan;
+            label20.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label20.ForeColor = SystemColors.WindowText;
+            label20.Location = new Point(517, 318);
+            label20.Name = "label20";
+            label20.Size = new Size(180, 21);
+            label20.TabIndex = 34;
+            label20.Text = "Kewarganegaraan:";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.BackColor = Color.Tan;
+            label21.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label21.ForeColor = SystemColors.WindowText;
+            label21.Location = new Point(517, 293);
+            label21.Name = "label21";
+            label21.Size = new Size(102, 21);
+            label21.TabIndex = 33;
+            label21.Text = "Pekerjaan:";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.BackColor = Color.Tan;
+            label22.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label22.ForeColor = SystemColors.WindowText;
+            label22.Location = new Point(517, 266);
+            label22.Name = "label22";
+            label22.Size = new Size(68, 21);
+            label22.TabIndex = 32;
+            label22.Text = "Status:";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.BackColor = Color.Tan;
+            label23.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label23.ForeColor = SystemColors.WindowText;
+            label23.Location = new Point(517, 238);
+            label23.Name = "label23";
+            label23.Size = new Size(83, 21);
+            label23.TabIndex = 31;
+            label23.Text = "Agama:";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -439,5 +581,15 @@ namespace WinFormsApp1
         private TextBox textBox1;
         public PictureBox pictureBox3;
         private TextBox textBox2;
+        private Label label14;
+        private Label label17;
+        private Label label16;
+        private Label label15;
+        private Label label20;
+        private Label label21;
+        private Label label22;
+        private Label label23;
+        private Label label19;
+        private Label label18;
     }
 }
