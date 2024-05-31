@@ -4,17 +4,5 @@
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Toggle\ButtonOval.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Toggle\RoundedPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Toggle\Search.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="Toggle\Toggle.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
 </Project>
