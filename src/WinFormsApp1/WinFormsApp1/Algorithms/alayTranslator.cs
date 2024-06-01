@@ -2,7 +2,7 @@ using System;
 using System.Text.RegularExpressions;
 namespace WinFormsApp1.Algorithm
 {
-	public class alayTranslator
+	public class AlayTranslator
 	{
         public static string translateAlay(string input)
         {
