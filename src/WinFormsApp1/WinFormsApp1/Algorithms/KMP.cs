@@ -34,11 +34,10 @@ namespace WinFormsApp1.Algorithm {
         }
 
         // Fungsi untuk mencari pola dalam teks menggunakan algoritma KMP
-        public static void KMPSearch(string pattern, string text)
+        public static int KMPSearch(string pattern, string text)
         {
             int M = pattern.Length;
             int N = text.Length;
-
             // Buat array lps[] yang akan menampung panjang dari prefix suffix terpanjang
             int[] lps = new int[M];
             int j = 0;  // Indeks untuk pattern[]
@@ -57,8 +56,10 @@ namespace WinFormsApp1.Algorithm {
 
                 if (j == M)
                 {
-                    Console.WriteLine("Pattern ditemukan pada indeks " + (i - j));
-                    j = lps[j - 1];
+                    System.Diagnostics.Debug.WriteLine("PATTERN"+ pattern);
+                    System.Diagnostics.Debug.WriteLine("TEXT"+ text);
+                    System.Diagnostics.Debug.WriteLine("Pattern ditemukan pada indeks " + (i-j));
+                    return i-j;
                 }
                 else if (i < N && pattern[j] != text[i])
                 {
@@ -72,6 +73,8 @@ namespace WinFormsApp1.Algorithm {
                     }
                 }
             }
+            System.Diagnostics.Debug.WriteLine("Pattern tidak ditemukan:((((((((((((");
+            return -1;
         }
 
         // public static void Main()

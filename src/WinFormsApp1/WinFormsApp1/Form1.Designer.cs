@@ -157,6 +157,7 @@ namespace WinFormsApp1
             toggle2.TabIndex = 12;
             toggle2.Text = "toggle2";
             toggle2.UseVisualStyleBackColor = true;
+            this.toggle2.CheckedChanged += new System.EventHandler(this.toggle2_CheckedChanged);
             // 
             // buttonOval2
             // 

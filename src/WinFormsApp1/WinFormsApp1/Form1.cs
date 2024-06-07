@@ -13,21 +13,40 @@ namespace WinFormsApp1
 {
     public partial class Form1 : Form
     {
+        private bool toggledon;
         public Form1()
         {
             InitializeComponent();
             buttonOval2.Click += ButtonOval2_Click;
         }
 
+        // to change toggle button state
+        private void toggle2_CheckedChanged(object sender, EventArgs e)
+        {
+            // Handle the toggle state change
+            if (toggle2.Checked)
+            {
+                System.Diagnostics.Debug.WriteLine("DEBUG :::::::::: Toggle ON");
+                toggledon = true;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("DEBUG :::::::::: Toggle OFF");
+                toggledon = false;
+            }
+        }
+
+
         private void ButtonOval2_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image Files (*.png;*.jpg)|*.png;*.jpg|All files (*.*)|*.*";
+            openFileDialog.Filter = "Fingerprint Imgs (*.BMP)|*.BMP";
             openFileDialog.FilterIndex = 1;
             openFileDialog.RestoreDirectory = true;
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                System.Diagnostics.Debug.WriteLine("DEBUG--------------------- GAMBAR DITERIMA DAN DI LOAD");
                 // Get the selected file name
                 string selectedFileName = openFileDialog.FileName;
 
@@ -38,27 +57,41 @@ namespace WinFormsApp1
                 // Load and preprocess the image
                 Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
                 Image<Gray, byte> binaryImage = PreprocessFingerprint(image);
-
-                // Display the processed binary image in pictureBox2
-
+            
+                // Resize to 240x320 pixels
+                Image<Gray, byte> resizedImage = binaryImage.Resize(240, 320, Inter.Linear);
+                // Display the processed binary image in pictureBox2 for testinggg
                 // Convert the binary image to a string of 0s and 1s
-                string binaryString = ConvertBinaryImageToString(binaryImage);
+                string binaryString = ConvertBinaryImageToString(resizedImage);
                 string asciiString = ConvertBinaryToAscii(binaryString);
-                // Display the binary string in a TextBox
                 textBox1.Text = binaryString;
                 textBox2.Text = asciiString;
-                PerformPatternMatching(asciiString);
+                PerformPatternMatching(0,asciiString);
+
+                // string resultPath = "";
+                // // Display the output image in pic box
+                // pictureBox3.Image = Image.FromFile(resultPath);
+                System.Diagnostics.Debug.WriteLine("DEBUG--------------------- PROGRAM SELESAI EKSEKUSI");
+
             }
         }
-        private void PerformPatternMatching(string text)
+        private int PerformPatternMatching(int algoritma, string text)
         {
+            System.Diagnostics.Debug.WriteLine("DEBUG--------------------- MULAI PATTERN MATCHING");
             string pattern = "yourPatternHere"; // Replace with the pattern you want to search for
 
             // Use Boyer-Moore algorithm
-            BoyerMooreAlgorithm.BMSearch(pattern, text);
-
+            if (!toggledon){
+                System.Diagnostics.Debug.WriteLine("DEBUG>>>>>>>>>>>>>>>>>> Menggunakan Algoritma BM");
+                // return BoyerMooreAlgorithm.BMSearch(pattern, text);
+                return BoyerMooreAlgorithm.BMSearch("BAAB", "AABAACAADAABAABA");
+            }
             // Use KMP algorithm
-            KMPAlgorithm.KMPSearch(pattern, text);
+            else{
+                System.Diagnostics.Debug.WriteLine("DEBUG>>>>>>>>>>>>>>>>>> Menggunakan Algoritma KMP");
+                // return KMPAlgorithm.KMPSearch(pattern, text);
+                return KMPAlgorithm.KMPSearch("BAAB", "AABAACAADAABAABA");
+            }
         }
         private string ConvertBinaryToAscii(string binaryString)
         {
@@ -82,6 +115,7 @@ namespace WinFormsApp1
             return asciiString.ToString();
         }
 
+        // to convert to grayscale and clean the image
         private Image<Gray, byte> PreprocessFingerprint(Image<Bgr, byte> image)
         {
             // Convert to grayscale
@@ -99,46 +133,8 @@ namespace WinFormsApp1
             Image<Gray, byte> binaryImage = new Image<Gray, byte>(blurredImage.Size);
             CvInvoke.AdaptiveThreshold(blurredImage, binaryImage, 255, AdaptiveThresholdType.MeanC, ThresholdType.BinaryInv, 11, 2);
 
-            // Find contours
-            var contours = new VectorOfVectorOfPoint();
-            Mat hierarchy = new Mat();
-            CvInvoke.FindContours(binaryImage, contours, hierarchy, RetrType.External, ChainApproxMethod.ChainApproxSimple);
-
-            // Find the largest contour, which should be the fingerprint
-            double largestArea = 0;
-            int largestContourIndex = -1;
-            for (int i = 0; i < contours.Size; i++)
-            {
-                double area = CvInvoke.ContourArea(contours[i]);
-                if (area > largestArea)
-                {
-                    largestArea = area;
-                    largestContourIndex = i;
-                }
-            }
-
-            if (largestContourIndex == -1)
-            {
-                throw new Exception("No contours found in the image.");
-            }
-
-            // Get the bounding box of the largest contour
-            Rectangle boundingBox = CvInvoke.BoundingRectangle(contours[largestContourIndex]);
-
-            // Crop the image to the bounding box
-            Image<Bgr, byte> croppedImage = image.GetSubRect(boundingBox);
-
-            // Resize the cropped image to a standard size, e.g., 256x256
-            Image<Bgr, byte> resizedImage = croppedImage.Resize(256, 256, Inter.Linear);
-
-            // Convert the resized image to grayscale and apply adaptive thresholding again
-            Image<Gray, byte> finalGrayImage = resizedImage.Convert<Gray, byte>();
-            Image<Gray, byte> finalBinaryImage = new Image<Gray, byte>(finalGrayImage.Size);
-            CvInvoke.AdaptiveThreshold(finalGrayImage, finalBinaryImage, 255, AdaptiveThresholdType.MeanC, ThresholdType.BinaryInv, 11, 2);
-
-            return finalBinaryImage;
+            return binaryImage;
         }
-
         private string ConvertBinaryImageToString(Image<Gray, byte> binaryImage)
         {
             StringBuilder sb = new StringBuilder();
@@ -166,7 +162,6 @@ namespace WinFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Hello");
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -219,6 +214,11 @@ namespace WinFormsApp1
         }
 
         private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
         {
 
         }
