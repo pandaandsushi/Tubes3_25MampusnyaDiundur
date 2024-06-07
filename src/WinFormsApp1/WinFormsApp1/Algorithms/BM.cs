@@ -17,14 +17,13 @@ namespace WinFormsApp1.Algorithm{
         }
 
         // Fungsi untuk mencari pola dalam teks menggunakan algoritma Boyer-Moore
-        public static int BMSearch(string pattern, string text)
+        public static bool BMSearch(string pattern, string text)
         {
             int m = pattern.Length;
             int n = text.Length;
             int[] badChar = new int[256];
             // Bangun tabel Bad Character Heuristic
             BuildBadCharTable(pattern, badChar);
-
             int s = 0;  // s adalah pergeseran dari pattern ke teks
             while (s <= (n - m))
             {
@@ -40,7 +39,7 @@ namespace WinFormsApp1.Algorithm{
                     System.Diagnostics.Debug.WriteLine("PATTERN"+ pattern);
                     System.Diagnostics.Debug.WriteLine("TEXT"+ text);
                     System.Diagnostics.Debug.WriteLine("Pattern ditemukan pada indeks " + s);
-                    return s;
+                    return true;
                 }
                 else
                 {
@@ -48,8 +47,8 @@ namespace WinFormsApp1.Algorithm{
                     s += Math.Max(1, j - badChar[text[s + j]]);
                 }
             }
-            System.Diagnostics.Debug.WriteLine("Pattern tidak ditemukan:((((((((((((");
-            return -1;
+            System.Diagnostics.Debug.WriteLine("Pattern tidak ditemukan di BM :(");
+            return false;
         }
 
         // public static void Main()

@@ -34,7 +34,7 @@ namespace WinFormsApp1.Algorithm {
         }
 
         // Fungsi untuk mencari pola dalam teks menggunakan algoritma KMP
-        public static int KMPSearch(string pattern, string text)
+        public static bool KMPSearch(string pattern, string text)
         {
             int M = pattern.Length;
             int N = text.Length;
@@ -59,7 +59,7 @@ namespace WinFormsApp1.Algorithm {
                     System.Diagnostics.Debug.WriteLine("PATTERN"+ pattern);
                     System.Diagnostics.Debug.WriteLine("TEXT"+ text);
                     System.Diagnostics.Debug.WriteLine("Pattern ditemukan pada indeks " + (i-j));
-                    return i-j;
+                    return true;
                 }
                 else if (i < N && pattern[j] != text[i])
                 {
@@ -73,8 +73,8 @@ namespace WinFormsApp1.Algorithm {
                     }
                 }
             }
-            System.Diagnostics.Debug.WriteLine("Pattern tidak ditemukan:((((((((((((");
-            return -1;
+            System.Diagnostics.Debug.WriteLine("Pattern tidak ditemukan di KMP :(");
+            return false;
         }
 
         // public static void Main()

@@ -97,7 +97,6 @@ namespace WinFormsApp1
             label3.Size = new Size(147, 22);
             label3.TabIndex = 5;
             label3.Text = "Your Fingerprint";
-            label3.Click += label3_Click;
             // 
             // label4
             // 
@@ -199,7 +198,6 @@ namespace WinFormsApp1
             label8.Size = new Size(60, 22);
             label8.TabIndex = 17;
             label8.Text = "Result";
-            label8.Click += label8_Click;
             // 
             // panel2
             // 
@@ -236,7 +234,6 @@ namespace WinFormsApp1
             label13.Size = new Size(166, 21);
             label13.TabIndex = 24;
             label13.Text = "Tingkat kemiripan:";
-            label13.Click += label13_Click;
             // 
             // label12
             // 
@@ -249,7 +246,6 @@ namespace WinFormsApp1
             label12.Size = new Size(144, 21);
             label12.TabIndex = 23;
             label12.Text = "Waktu Eksekusi:";
-            label12.Click += label12_Click;
             // 
             // label9
             // 
@@ -262,7 +258,6 @@ namespace WinFormsApp1
             label9.Size = new Size(44, 21);
             label9.TabIndex = 22;
             label9.Text = "NIK:";
-            label9.Click += label9_Click;
             // 
             // pictureBox4
             // 
@@ -285,7 +280,6 @@ namespace WinFormsApp1
             label1.Size = new Size(190, 18);
             label1.TabIndex = 3;
             label1.Text = "25MampusnyaDiundur";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -298,7 +292,6 @@ namespace WinFormsApp1
             label2.Size = new Size(408, 22);
             label2.TabIndex = 4;
             label2.Text = "Fingerprint Pattern Matching with KMP and BM\r\n";
-            label2.Click += label2_Click;
             // 
             // pictureBox1
             // 
@@ -400,7 +393,6 @@ namespace WinFormsApp1
             label14.Size = new Size(74, 21);
             label14.TabIndex = 25;
             label14.Text = "Name: ";
-            label14.Click += label14_Click;
             // 
             // label15
             // 
@@ -437,7 +429,6 @@ namespace WinFormsApp1
             label17.Size = new Size(126, 21);
             label17.TabIndex = 28;
             label17.Text = "JenisKelamin:";
-            label17.Click += label17_Click;
             // 
             // label18
             // 

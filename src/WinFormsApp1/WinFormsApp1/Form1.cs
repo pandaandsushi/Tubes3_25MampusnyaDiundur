@@ -14,16 +14,89 @@ namespace WinFormsApp1
     public partial class Form1 : Form
     {
         private bool toggledon;
+        private String ascii;
+        private String resultnama;
+        private String resultpath;
         public Form1()
         {
             InitializeComponent();
             buttonOval2.Click += ButtonOval2_Click;
+            search1.Click += ButtonSearch1_Click;
+            UpdateDatabaseWithAsciiRepresentation();
         }
+        // getting the project dir for diff user
+        private string GetProjectDirectory()
+        {
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string projectDirectory = Path.Combine(Directory.GetParent(currentDirectory).Parent.Parent.Parent.FullName, "..");
+            return projectDirectory;
+        }
+
+
+        private void UpdateDatabaseWithAsciiRepresentation()
+        {
+            string projectDirectory = GetProjectDirectory();
+            string imagesDirectory = Path.Combine(projectDirectory, "SOCOFing", "Altered", "Altered-Easy");
+
+            string connectionString = "server=localhost;user id=root;password=password;database=fingerprint";
+            string query = "SELECT berkas_citra, nama FROM sidik_jari";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                System.Diagnostics.Debug.WriteLine($"DEBUGGGGGGGGGGGGG: BERHASIL ON CONNECTION");
+                while (reader.Read())
+                {
+                    string relativeImagePath = reader["berkas_citra"].ToString();
+                    string imagePath = Path.Combine(imagesDirectory, relativeImagePath);
+                    if (File.Exists(imagePath)) // Ensure the file exists before processing
+                    {
+                        string name = reader["nama"].ToString();
+                        string asciiRepresentation = GetAsciiRepresentation(imagePath);
+                        UpdateAsciiInDatabase(name, asciiRepresentation);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"DEBUG: File {imagePath} does not exist");
+                    }
+                }
+            }
+        }
+
+        private string GetAsciiRepresentation(string imagePath)
+        {
+            Image<Bgr, byte> image = new Image<Bgr, byte>(imagePath);
+            Image<Gray, byte> binaryImage = PreprocessFingerprint(image);
+
+            Image<Gray, byte> resizedImage = binaryImage.Resize(240, 320, Inter.Linear);
+            string binaryString = ConvertBinaryImageToString(resizedImage);
+            string asciiString = ConvertBinaryToAscii(binaryString);
+
+            return asciiString;
+        }
+
+        private void UpdateAsciiInDatabase(string name, string asciiRepresentation)
+        {
+            string connectionString = "server=localhost;user id=root;password=password;database=fingerprint";
+            string updateQuery = "UPDATE sidik_jari SET ascii_represent = @ascii_represent WHERE nama = @nama";
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(updateQuery, conn);
+                cmd.Parameters.AddWithValue("@ascii_represent", asciiRepresentation);
+                cmd.Parameters.AddWithValue("@nama", name);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
 
         // to change toggle button state
         private void toggle2_CheckedChanged(object sender, EventArgs e)
         {
-            // Handle the toggle state change
             if (toggle2.Checked)
             {
                 System.Diagnostics.Debug.WriteLine("DEBUG :::::::::: Toggle ON");
@@ -36,6 +109,9 @@ namespace WinFormsApp1
             }
         }
 
+        private void ButtonSearch1_Click(object sender, EventArgs e){
+            (resultnama, resultpath) = PerformPatternMatching(ascii);
+        }
 
         private void ButtonOval2_Click(object sender, EventArgs e)
         {
@@ -64,34 +140,54 @@ namespace WinFormsApp1
                 // Convert the binary image to a string of 0s and 1s
                 string binaryString = ConvertBinaryImageToString(resizedImage);
                 string asciiString = ConvertBinaryToAscii(binaryString);
+                ascii = asciiString;
+
+                // DEBUG SHOW ASCII
                 textBox1.Text = binaryString;
                 textBox2.Text = asciiString;
-                PerformPatternMatching(0,asciiString);
+                
 
-                // string resultPath = "";
                 // // Display the output image in pic box
-                // pictureBox3.Image = Image.FromFile(resultPath);
+                // pictureBox3.Image = Image.FromFile(resultpath);
                 System.Diagnostics.Debug.WriteLine("DEBUG--------------------- PROGRAM SELESAI EKSEKUSI");
 
             }
         }
-        private int PerformPatternMatching(int algoritma, string text)
+
+        // Will Perform patternmatching algo based on the toggle button
+        // Will return the nama and image path attribute if found 
+        private (string nama, string path) PerformPatternMatching(string pattern)
         {
             System.Diagnostics.Debug.WriteLine("DEBUG--------------------- MULAI PATTERN MATCHING");
-            string pattern = "yourPatternHere"; // Replace with the pattern you want to search for
+            bool found = false;
+            string connectionString = "server=localhost;user id=root;password=password;database=fingerprint";
+            string query = "SELECT berkas_citra, nama, ascii_represent FROM sidik_jari";
 
-            // Use Boyer-Moore algorithm
-            if (!toggledon){
-                System.Diagnostics.Debug.WriteLine("DEBUG>>>>>>>>>>>>>>>>>> Menggunakan Algoritma BM");
-                // return BoyerMooreAlgorithm.BMSearch(pattern, text);
-                return BoyerMooreAlgorithm.BMSearch("BAAB", "AABAACAADAABAABA");
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string asciiRepresentation = reader["ascii_represent"].ToString();
+                    string nama = reader["nama"].ToString();
+                    string imagePath = reader["berkas_citra"].ToString();
+
+                    if (toggledon){
+                        found = KMPAlgorithm.KMPSearch(pattern, asciiRepresentation);
+                    }
+                    else{
+                        found = BoyerMooreAlgorithm.BMSearch(pattern, asciiRepresentation);
+                    }
+                    if (found){
+                        return (nama, imagePath);
+                    }
+                }
             }
-            // Use KMP algorithm
-            else{
-                System.Diagnostics.Debug.WriteLine("DEBUG>>>>>>>>>>>>>>>>>> Menggunakan Algoritma KMP");
-                // return KMPAlgorithm.KMPSearch(pattern, text);
-                return KMPAlgorithm.KMPSearch("BAAB", "AABAACAADAABAABA");
-            }
+
+            return (null, null);
         }
         private string ConvertBinaryToAscii(string binaryString)
         {
