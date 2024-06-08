@@ -1,3 +1,5 @@
+using System;
+using Algorithms;
 namespace WinFormsApp1
 {
     internal static class Program
@@ -25,20 +27,39 @@ namespace WinFormsApp1
             Fingerprints fingerprints = new Fingerprints(db);
 
             // Test inserting a fingerprint
-            string nama = "John Doe";
             //string berkas_citra = System.IO.Path.Combine("test", "100__M_Left_index_finger.bmp");
             //fingerprints.InsertFingerprint(nama, berkas_citra);
             //Console.WriteLine("Fingerprint inserted successfully.");
 
             // Test retrieving a fingerprint
-            string retrievedPath = fingerprints.GetFingerprintByName(nama);
-            if (retrievedPath != null)
+            
+            string nama = "John Doe";
+            string fakenama = "jHn d0e";
+            string purified = alayTranslator.translateAlay(fakenama);
+            // Test retrieving a fingerprint
+            Fingerprint result = fingerprints.GetFingerprintByName(nama);
+            if (result != null)
             {
-                Console.WriteLine($"Fingerprint path for {nama}: {retrievedPath}");
+               Console.WriteLine($"Fingerprint path for {nama}: {result.BerkasCitra}");
+               Console.WriteLine($"Translate  {fakenama} to {purified}");
+               Console.WriteLine($"Levenshtein distance between {nama} and {purified}: {Levenshtein.calculateSimilarity(nama, purified)}");
+
             }
             else
             {
-                Console.WriteLine($"No fingerprint found for {nama}");
+               Console.WriteLine($"No fingerprint found for {nama}");
+            }
+
+           List<Fingerprint> fingerprintList = fingerprints.GetAllFingerprintData();
+            if (fingerprintList.Count > 0){
+                foreach (var fingerprint in fingerprintList)
+                {
+                    Console.WriteLine($"Fingerprint path for {fingerprint.Nama}: {fingerprint.BerkasCitra}");
+                }
+            }
+            else{
+                Console.WriteLine($"No fingerprint");
+
             }
 
         }
