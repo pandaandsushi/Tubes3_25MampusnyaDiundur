@@ -6,6 +6,7 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using Bogus;
 using WinFormsApp1.Algorithm;
 using MySql.Data.MySqlClient;
 
@@ -39,13 +40,16 @@ namespace WinFormsApp1
 
             fingerprints = new Fingerprints(db);
 
+            /// alter table 
+            fingerprints.alterTable();
+            GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
             // UpdateDatabaseWithAsciiRepresentation();
         }
         // getting the project dir for diff user
         private string GetProjectDirectory()
         {
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string projectDirectory = Path.Combine(Directory.GetParent(currentDirectory).Parent.Parent.Parent.FullName, "..");
+            string projectDirectory = Path.Combine(Directory.GetParent(currentDirectory).Parent.Parent.Parent.FullName, "..", "..", "..");
             return projectDirectory;
         }
 
@@ -53,22 +57,20 @@ namespace WinFormsApp1
         private void UpdateDatabaseWithAsciiRepresentation()
         {
             string projectDirectory = GetProjectDirectory();
-            string imagesDirectory = Path.Combine(projectDirectory, "SOCOFing", "Altered", "Altered-Easy");
 
-            List<Fingerprint> fingerprintData = fingerprints.GetAllFingerprintData();
+            List<Fingerprint> allFingerprints = fingerprints.GetAllFingerprintData();
 
-            foreach (var fingerprint in fingerprintData)
+            foreach (var fingerprint in allFingerprints)
             {
-                string relativeImagePath = fingerprint.BerkasCitra;
-                string imagePath = Path.Combine(imagesDirectory, relativeImagePath);
-                if (File.Exists(imagePath)) // Ensure the file exists before processing
+                string imagePath = Path.Combine(projectDirectory, fingerprint.BerkasCitra);
+                if (File.Exists(imagePath))
                 {
                     string asciiRepresentation = GetAsciiRepresentation(imagePath);
-                    UpdateAsciiInDatabase(fingerprint.Nama, asciiRepresentation);
+                    fingerprints.insertAscii(fingerprint.Nama, asciiRepresentation);
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine($"DEBUG: File {imagePath} does not exist");
+                    Console.WriteLine($"Image file {imagePath} not found.");
                 }
             }
         }
@@ -85,19 +87,32 @@ namespace WinFormsApp1
             return asciiString;
         }
 
-        private void UpdateAsciiInDatabase(string name, string asciiRepresentation)
-        {
-            string connectionString = "server=localhost;user id=root;password=password;database=fingerprint";
-            string updateQuery = "UPDATE sidik_jari SET ascii_represent = @ascii_represent WHERE nama = @nama";
+        private void GenerateDummy(string projectDirectory, Fingerprints fingerprints){
+            string[] imageFiles = Directory.GetFiles(projectDirectory, "*.bmp");
+            Console.WriteLine($"{projectDirectory}");
+            var faker = new Faker();
 
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            foreach (string imagePath in imageFiles)
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand(updateQuery, conn);
-                cmd.Parameters.AddWithValue("@ascii_represent", asciiRepresentation);
-                cmd.Parameters.AddWithValue("@nama", name);
-
-                cmd.ExecuteNonQuery();
+                string fileName = Path.Combine("test", Path.GetFileName(imagePath));
+                Person person = faker.Person;
+                string name = person.FullName;
+                fingerprints.InsertFingerprint(name, fileName);
+                Console.WriteLine($"{name}, {fileName}");
+                
+                string NIK = faker.Random.Number(100000000, 999999999).ToString();
+                string Nama = AlayTranslator.ConvertToAlay(name);
+                string TempatLahir = faker.Address.City();
+                DateTime TanggalLahir = faker.Date.Past(30, DateTime.Now.AddYears(-20));
+                string JenisKelamin = person.Gender.ToString() == "Female" ? "Perempuan" : "Laki-Laki";
+                string GolonganDarah = faker.PickRandom(new[] { "A", "B", "AB", "O" });
+                string Alamat = faker.Address.FullAddress();
+                string Agama = faker.PickRandom(new[] { "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu" });
+                string StatusPerkawinan = faker.PickRandom(new[] { "Belum Menikah","Menikah","Cerai"});
+                string Pekerjaan = faker.Name.JobTitle();
+                string Kewarganegaraan = faker.Address.Country();
+                fingerprints.InsertBiodata(NIK, Nama, TempatLahir, TanggalLahir, JenisKelamin, GolonganDarah, Alamat, Agama, StatusPerkawinan, Pekerjaan, Kewarganegaraan);
+                Console.WriteLine($"{NIK}, {Nama}, {TempatLahir}, {TanggalLahir}, {JenisKelamin}, {GolonganDarah}, {Alamat}, {Agama}, {StatusPerkawinan}, {Pekerjaan}, {Kewarganegaraan}");
             }
         }
 

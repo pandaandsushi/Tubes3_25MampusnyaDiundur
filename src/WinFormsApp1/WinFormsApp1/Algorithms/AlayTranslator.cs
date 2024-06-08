@@ -24,8 +24,43 @@ namespace WinFormsApp1.Algorithm
             result = Regex.Replace(result, @"\b[a-z]", m => m.Value.ToUpper());
 
             return result;
-
         }
+        public static string ConvertToAlay(string input)
+        {
+            string result = Regex.Replace(input, "[AIEGoag]", m =>
+            {
+                switch (m.Value)
+                {
+                    case "A": return "4";
+                    case "a": return "4";
+                    case "I": return "1";
+                    case "E": return "3";
+                    case "e": return "E";
+                    case "o": return "0";
+                    case "g": return "9";
+                    default: return m.Value;
+                }
+            });
+            result = result.ToLower();
 
+            string temp = "";
+            bool firstVowel = false;
+            foreach (char c in result)
+            {
+                if ("aeiou".IndexOf(c) >= 0)
+                {
+                    if (!firstVowel)
+                    {
+                        temp += c;
+                        firstVowel = true;
+                    }
+                }
+                else
+                {
+                    temp += c;
+                }
+            }
+            return temp;
+        }
     }
 }

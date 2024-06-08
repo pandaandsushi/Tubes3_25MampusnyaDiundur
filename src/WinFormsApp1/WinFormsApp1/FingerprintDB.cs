@@ -54,6 +54,7 @@ namespace WinFormsApp1
                 fingerprint = new Fingerprint{
                     BerkasCitra = reader.GetString("berkas_citra"),
                     Nama = reader.GetString("nama"),
+                    Ascii = reader.IsDBNull(reader.GetOrdinal("ascii")) ? null : reader.GetString("ascii")
                 };
             }
 
@@ -63,7 +64,7 @@ namespace WinFormsApp1
 
         public List<Fingerprint> GetAllFingerprintData()
         {
-            List<Fingerprint> fingerprintList = new List<Fingerprint>();
+            List<Fingerprint> fingerprintList = new();
 
             db.OpenConnection();
             MySqlCommand cmd = new MySqlCommand("SELECT * FROM sidik_jari", db.GetConnection());
@@ -74,7 +75,7 @@ namespace WinFormsApp1
                 Fingerprint fingerprint = new Fingerprint{
                     BerkasCitra = reader.GetString("berkas_citra"),
                     Nama = reader.GetString("nama"),
-                    AsciiRepresent = reader.GetString("ascii_represent"),
+                    Ascii = reader.IsDBNull(reader.GetOrdinal("ascii")) ? null : reader.GetString("ascii")
                 };
                 fingerprintList.Add(fingerprint);
             }
@@ -83,11 +84,9 @@ namespace WinFormsApp1
             return fingerprintList;
         }
 
-        
-
         public List<string> GetAllBerkasCitra()
         {
-            List<string> fingerprintList = new List<string>();
+            List<string> fingerprintList = new();
 
             db.OpenConnection();
             MySqlCommand cmd = new MySqlCommand("SELECT berkas_citra FROM sidik_jari", db.GetConnection());
@@ -105,7 +104,7 @@ namespace WinFormsApp1
 
         public List<Biodata> GetBiodataByName(string nama)
         {
-            List<Biodata> biodataList = new List<Biodata>();
+            List<Biodata> biodataList = new();
 
             db.OpenConnection();
             MySqlCommand cmd = new MySqlCommand("SELECT * FROM biodata WHERE nama = @nama", db.GetConnection());
@@ -138,7 +137,7 @@ namespace WinFormsApp1
 
         public List<Biodata> GetAllBiodataData()
         {
-            List<Biodata> biodataList = new List<Biodata>();
+            List<Biodata> biodataList = new();
 
             db.OpenConnection();
             MySqlCommand cmd = new MySqlCommand("SELECT * FROM biodata", db.GetConnection());
@@ -166,6 +165,22 @@ namespace WinFormsApp1
 
             db.CloseConnection();
             return biodataList;
+        }
+
+        public void alterTable(){
+            db.OpenConnection();
+            MySqlCommand cmd = new MySqlCommand("ALTER TABLE sidik_jari ADD COLUMN ascii TEXT", db.GetConnection());
+            cmd.ExecuteNonQuery();
+            db.CloseConnection();
+        }
+        public void insertAscii(string nama, string ascii){
+            db.OpenConnection();
+
+            MySqlCommand cmd = new MySqlCommand("UPDATE sidik_jari SET ascii = @ascii WHERE nama = @nama", db.GetConnection());
+            cmd.Parameters.AddWithValue("@ascii", ascii);
+            cmd.Parameters.AddWithValue("@nama", nama);
+            cmd.ExecuteNonQuery();
+            db.CloseConnection();
         }
     }
 }
