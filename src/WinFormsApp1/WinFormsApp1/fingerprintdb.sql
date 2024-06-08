@@ -67,9 +67,6 @@ CREATE TABLE `sidik_jari` (
 
 LOCK TABLES `sidik_jari` WRITE;
 /*!40000 ALTER TABLE `sidik_jari` DISABLE KEYS */;
-INSERT INTO `sidik_jari` VALUES
-('test\\100__M_Left_index_finger.bmp','John Doe',NULL),
-('test\\100__M_Left_index_finger.bmp','John Doe',NULL);
 /*!40000 ALTER TABLE `sidik_jari` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
