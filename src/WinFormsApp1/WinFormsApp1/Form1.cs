@@ -29,22 +29,12 @@ namespace WinFormsApp1
             string connectionString = "server=localhost;user id=root;password=password;database=fingerprint";
             Database db = new Database(connectionString);
             System.Diagnostics.Debug.WriteLine($"DEBUGGGGGGGGGGGGG: BERHASIL ON CONNECTION");
-            
-            // TESTING REGEX
-            // string nama = "John Doe";
-            // string fakenama = "jHn d0e";
-            // string purified = AlayTranslator.translateAlay(fakenama);
-            // // Test retrieving a fingerprint
-            // System.Diagnostics.Debug.WriteLine($"Translate  {fakenama} to {purified}");
-            // System.Diagnostics.Debug.WriteLine($"Levenshtein distance between {nama} and {purified}: {Levenshtein.calculateSimilarity(nama, purified)}");
-            
 
             fingerprints = new Fingerprints(db);
 
             /// alter table 
             fingerprints.alterTable();
             GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
-            // UpdateDatabaseWithAsciiRepresentation();
         }
         // getting the project dir for diff user
         private string GetProjectDirectory()
@@ -54,39 +44,6 @@ namespace WinFormsApp1
             return projectDirectory;
         }
 
-
-        private void UpdateDatabaseWithAsciiRepresentation()
-        {
-            string projectDirectory = GetProjectDirectory();
-
-            List<Fingerprint> allFingerprints = fingerprints.GetAllFingerprintData();
-
-            foreach (var fingerprint in allFingerprints)
-            {
-                string imagePath = Path.Combine(projectDirectory, fingerprint.BerkasCitra);
-                if (File.Exists(imagePath))
-                {
-                    string asciiRepresentation = GetAsciiRepresentation(imagePath);
-                    fingerprints.insertAscii(fingerprint.Nama, asciiRepresentation);
-                }
-                else
-                {
-                    Console.WriteLine($"Image file {imagePath} not found.");
-                }
-            }
-        }
-
-        private string GetAsciiRepresentation(string imagePath)
-        {
-            Image<Bgr, byte> image = new Image<Bgr, byte>(imagePath);
-            Image<Gray, byte> binaryImage = Preprocessing.PreprocessFingerprint(image);
-
-            Image<Gray, byte> resizedImage = binaryImage.Resize(240, 320, Inter.Linear);
-            string binaryString = Preprocessing.ConvertBinaryImageToString(resizedImage);
-            string asciiString = Preprocessing.ConvertBinaryToAscii(binaryString);
-
-            return asciiString;
-        }
 
         private void GenerateDummy(string projectDirectory, Fingerprints fingerprints){
             string[] imageFiles = Directory.GetFiles(projectDirectory, "*.bmp");
@@ -209,45 +166,22 @@ namespace WinFormsApp1
             {
                 System.Diagnostics.Debug.WriteLine("DEBUG--------------------- GAMBAR DITERIMA DAN DI LOAD");
                 // Get the selected file name
-            string selectedFileName = openFileDialog.FileName;
+                string selectedFileName = openFileDialog.FileName;
 
-            // Load the selected image into pictureBox2
-            pictureBox2.Image = Image.FromFile(selectedFileName);
-            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                // Load the selected image into pictureBox2
+                pictureBox2.Image = Image.FromFile(selectedFileName);
+                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
-            // Load and preprocess the image
-            Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
+                // Load the selected image using Emgu CV
+                Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
+                String asciiInput = Preprocessing.ConvertImageToAscii(image);
+                
 
-            // Convert to grayscale
-            Image<Gray, byte> grayImage = image.Convert<Gray, byte>();
-
-            // Apply binary threshold
-            Image<Gray, byte> binaryImage = new Image<Gray, byte>(grayImage.Size);
-            CvInvoke.Threshold(grayImage, binaryImage, 127, 255, ThresholdType.Binary);
-
-            // Convert to 0 or 1 per pixel
-            byte[,] binaryArray = new byte[binaryImage.Rows, binaryImage.Cols];
-            for (int y = 0; y < binaryImage.Rows; y++)
-            {
-                for (int x = 0; x < binaryImage.Cols; x++)
-                {
-                    System.Diagnostics.Debug.WriteLine(binaryArray[y, x]);
-                    binaryArray[y, x] = binaryImage.Data[y, x, 0] == 255 ? (byte)1 : (byte)0;
-                }
-            }
-
-            for (int y = 0; y < binaryImage.Rows; y++)
-            {
-                for (int x = 0; x < binaryImage.Cols; x++)
-                {
-                    System.Diagnostics.Debug.WriteLine(binaryArray[y, x]);
-                }
-                System.Diagnostics.Debug.WriteLine("");
-            }
-        
                 System.Diagnostics.Debug.WriteLine("DEBUG--------------------- PROGRAM SELESAI EKSEKUSI");
             }
         }
+
+
         // Will Perform patternmatching algo based on the toggle button
         // Will return the nama and image path attribute if found 
         private (string nama, string path) PerformPatternMatching(string pattern)

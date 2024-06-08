@@ -42,6 +42,21 @@ namespace WinFormsApp1
             pictureBox3 = new PictureBox();
             label8 = new Label();
             panel2 = new Panel();
+            label36 = new Label();
+            label35 = new Label();
+            labelEksekusi = new Label();
+            labelKemiripan = new Label();
+            labelKWN = new Label();
+            labelPekerjaan = new Label();
+            labelStatus = new Label();
+            labelAgama = new Label();
+            labelAlamat = new Label();
+            labelGoldar = new Label();
+            labelJenisKelamin = new Label();
+            labelTanggalLahir = new Label();
+            labelTempatLahir = new Label();
+            labelNama = new Label();
+            labelNIK = new Label();
             label32 = new Label();
             label33 = new Label();
             label34 = new Label();
@@ -76,23 +91,6 @@ namespace WinFormsApp1
             panel3 = new Panel();
             label11 = new Label();
             pictureBox6 = new PictureBox();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            labelKWN = new Label();
-            labelPekerjaan = new Label();
-            labelStatus = new Label();
-            labelAgama = new Label();
-            labelAlamat = new Label();
-            labelGoldar = new Label();
-            labelJenisKelamin = new Label();
-            labelTanggalLahir = new Label();
-            labelTempatLahir = new Label();
-            labelNama = new Label();
-            labelNIK = new Label();
-            labelKemiripan = new Label();
-            labelEksekusi = new Label();
-            label35 = new Label();
-            label36 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             panel2.SuspendLayout();
@@ -274,6 +272,186 @@ namespace WinFormsApp1
             panel2.Name = "panel2";
             panel2.Size = new Size(910, 491);
             panel2.TabIndex = 18;
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.BackColor = Color.Tan;
+            label36.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label36.ForeColor = SystemColors.WindowText;
+            label36.Location = new Point(470, 456);
+            label36.Name = "label36";
+            label36.Size = new Size(34, 21);
+            label36.TabIndex = 60;
+            label36.Text = "ms";
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.BackColor = Color.Tan;
+            label35.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label35.ForeColor = SystemColors.WindowText;
+            label35.Location = new Point(250, 457);
+            label35.Name = "label35";
+            label35.Size = new Size(24, 21);
+            label35.TabIndex = 59;
+            label35.Text = "%";
+            // 
+            // labelEksekusi
+            // 
+            labelEksekusi.AutoSize = true;
+            labelEksekusi.BackColor = Color.Tan;
+            labelEksekusi.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelEksekusi.ForeColor = SystemColors.WindowText;
+            labelEksekusi.Location = new Point(440, 457);
+            labelEksekusi.Name = "labelEksekusi";
+            labelEksekusi.Size = new Size(20, 21);
+            labelEksekusi.TabIndex = 58;
+            labelEksekusi.Text = "0";
+            // 
+            // labelKemiripan
+            // 
+            labelKemiripan.AutoSize = true;
+            labelKemiripan.BackColor = Color.Tan;
+            labelKemiripan.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelKemiripan.ForeColor = SystemColors.WindowText;
+            labelKemiripan.Location = new Point(215, 457);
+            labelKemiripan.Name = "labelKemiripan";
+            labelKemiripan.Size = new Size(20, 21);
+            labelKemiripan.TabIndex = 57;
+            labelKemiripan.Text = "0";
+            // 
+            // labelKWN
+            // 
+            labelKWN.AutoSize = true;
+            labelKWN.BackColor = Color.Tan;
+            labelKWN.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelKWN.ForeColor = SystemColors.WindowText;
+            labelKWN.Location = new Point(731, 320);
+            labelKWN.Name = "labelKWN";
+            labelKWN.Size = new Size(58, 21);
+            labelKWN.TabIndex = 56;
+            labelKWN.Text = "None";
+            // 
+            // labelPekerjaan
+            // 
+            labelPekerjaan.AutoSize = true;
+            labelPekerjaan.BackColor = Color.Tan;
+            labelPekerjaan.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelPekerjaan.ForeColor = SystemColors.WindowText;
+            labelPekerjaan.Location = new Point(731, 293);
+            labelPekerjaan.Name = "labelPekerjaan";
+            labelPekerjaan.Size = new Size(58, 21);
+            labelPekerjaan.TabIndex = 55;
+            labelPekerjaan.Text = "None";
+            // 
+            // labelStatus
+            // 
+            labelStatus.AutoSize = true;
+            labelStatus.BackColor = Color.Tan;
+            labelStatus.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelStatus.ForeColor = SystemColors.WindowText;
+            labelStatus.Location = new Point(731, 264);
+            labelStatus.Name = "labelStatus";
+            labelStatus.Size = new Size(58, 21);
+            labelStatus.TabIndex = 54;
+            labelStatus.Text = "None";
+            // 
+            // labelAgama
+            // 
+            labelAgama.AutoSize = true;
+            labelAgama.BackColor = Color.Tan;
+            labelAgama.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelAgama.ForeColor = SystemColors.WindowText;
+            labelAgama.Location = new Point(731, 242);
+            labelAgama.Name = "labelAgama";
+            labelAgama.Size = new Size(58, 21);
+            labelAgama.TabIndex = 53;
+            labelAgama.Text = "None";
+            // 
+            // labelAlamat
+            // 
+            labelAlamat.AutoSize = true;
+            labelAlamat.BackColor = Color.Tan;
+            labelAlamat.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelAlamat.ForeColor = SystemColors.WindowText;
+            labelAlamat.Location = new Point(731, 215);
+            labelAlamat.Name = "labelAlamat";
+            labelAlamat.Size = new Size(58, 21);
+            labelAlamat.TabIndex = 52;
+            labelAlamat.Text = "None";
+            // 
+            // labelGoldar
+            // 
+            labelGoldar.AutoSize = true;
+            labelGoldar.BackColor = Color.Tan;
+            labelGoldar.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelGoldar.ForeColor = SystemColors.WindowText;
+            labelGoldar.Location = new Point(731, 186);
+            labelGoldar.Name = "labelGoldar";
+            labelGoldar.Size = new Size(58, 21);
+            labelGoldar.TabIndex = 51;
+            labelGoldar.Text = "None";
+            // 
+            // labelJenisKelamin
+            // 
+            labelJenisKelamin.AutoSize = true;
+            labelJenisKelamin.BackColor = Color.Tan;
+            labelJenisKelamin.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelJenisKelamin.ForeColor = SystemColors.WindowText;
+            labelJenisKelamin.Location = new Point(731, 159);
+            labelJenisKelamin.Name = "labelJenisKelamin";
+            labelJenisKelamin.Size = new Size(58, 21);
+            labelJenisKelamin.TabIndex = 50;
+            labelJenisKelamin.Text = "None";
+            // 
+            // labelTanggalLahir
+            // 
+            labelTanggalLahir.AutoSize = true;
+            labelTanggalLahir.BackColor = Color.Tan;
+            labelTanggalLahir.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelTanggalLahir.ForeColor = SystemColors.WindowText;
+            labelTanggalLahir.Location = new Point(731, 131);
+            labelTanggalLahir.Name = "labelTanggalLahir";
+            labelTanggalLahir.Size = new Size(58, 21);
+            labelTanggalLahir.TabIndex = 49;
+            labelTanggalLahir.Text = "None";
+            // 
+            // labelTempatLahir
+            // 
+            labelTempatLahir.AutoSize = true;
+            labelTempatLahir.BackColor = Color.Tan;
+            labelTempatLahir.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelTempatLahir.ForeColor = SystemColors.WindowText;
+            labelTempatLahir.Location = new Point(731, 104);
+            labelTempatLahir.Name = "labelTempatLahir";
+            labelTempatLahir.Size = new Size(58, 21);
+            labelTempatLahir.TabIndex = 48;
+            labelTempatLahir.Text = "None";
+            // 
+            // labelNama
+            // 
+            labelNama.AutoSize = true;
+            labelNama.BackColor = Color.Tan;
+            labelNama.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelNama.ForeColor = SystemColors.WindowText;
+            labelNama.Location = new Point(731, 75);
+            labelNama.Name = "labelNama";
+            labelNama.Size = new Size(58, 21);
+            labelNama.TabIndex = 47;
+            labelNama.Text = "None";
+            // 
+            // labelNIK
+            // 
+            labelNIK.AutoSize = true;
+            labelNIK.BackColor = Color.Tan;
+            labelNIK.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelNIK.ForeColor = SystemColors.WindowText;
+            labelNIK.Location = new Point(731, 48);
+            labelNIK.Name = "labelNIK";
+            labelNIK.Size = new Size(58, 21);
+            labelNIK.TabIndex = 46;
+            labelNIK.Text = "None";
             // 
             // label32
             // 
@@ -672,210 +850,12 @@ namespace WinFormsApp1
             pictureBox6.TabIndex = 23;
             pictureBox6.TabStop = false;
             // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(746, 33);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(483, 258);
-            textBox1.TabIndex = 24;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(125, 63);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(483, 258);
-            textBox2.TabIndex = 25;
-            // 
-            // labelKWN
-            // 
-            labelKWN.AutoSize = true;
-            labelKWN.BackColor = Color.Tan;
-            labelKWN.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelKWN.ForeColor = SystemColors.WindowText;
-            labelKWN.Location = new Point(731, 320);
-            labelKWN.Name = "labelKWN";
-            labelKWN.Size = new Size(58, 21);
-            labelKWN.TabIndex = 56;
-            labelKWN.Text = "None";
-            // 
-            // labelPekerjaan
-            // 
-            labelPekerjaan.AutoSize = true;
-            labelPekerjaan.BackColor = Color.Tan;
-            labelPekerjaan.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelPekerjaan.ForeColor = SystemColors.WindowText;
-            labelPekerjaan.Location = new Point(731, 293);
-            labelPekerjaan.Name = "labelPekerjaan";
-            labelPekerjaan.Size = new Size(58, 21);
-            labelPekerjaan.TabIndex = 55;
-            labelPekerjaan.Text = "None";
-            // 
-            // labelStatus
-            // 
-            labelStatus.AutoSize = true;
-            labelStatus.BackColor = Color.Tan;
-            labelStatus.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelStatus.ForeColor = SystemColors.WindowText;
-            labelStatus.Location = new Point(731, 264);
-            labelStatus.Name = "labelStatus";
-            labelStatus.Size = new Size(58, 21);
-            labelStatus.TabIndex = 54;
-            labelStatus.Text = "None";
-            // 
-            // labelAgama
-            // 
-            labelAgama.AutoSize = true;
-            labelAgama.BackColor = Color.Tan;
-            labelAgama.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelAgama.ForeColor = SystemColors.WindowText;
-            labelAgama.Location = new Point(731, 242);
-            labelAgama.Name = "labelAgama";
-            labelAgama.Size = new Size(58, 21);
-            labelAgama.TabIndex = 53;
-            labelAgama.Text = "None";
-            // 
-            // labelAlamat
-            // 
-            labelAlamat.AutoSize = true;
-            labelAlamat.BackColor = Color.Tan;
-            labelAlamat.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelAlamat.ForeColor = SystemColors.WindowText;
-            labelAlamat.Location = new Point(731, 215);
-            labelAlamat.Name = "labelAlamat";
-            labelAlamat.Size = new Size(58, 21);
-            labelAlamat.TabIndex = 52;
-            labelAlamat.Text = "None";
-            // 
-            // labelGoldar
-            // 
-            labelGoldar.AutoSize = true;
-            labelGoldar.BackColor = Color.Tan;
-            labelGoldar.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelGoldar.ForeColor = SystemColors.WindowText;
-            labelGoldar.Location = new Point(731, 186);
-            labelGoldar.Name = "labelGoldar";
-            labelGoldar.Size = new Size(58, 21);
-            labelGoldar.TabIndex = 51;
-            labelGoldar.Text = "None";
-            // 
-            // labelJenisKelamin
-            // 
-            labelJenisKelamin.AutoSize = true;
-            labelJenisKelamin.BackColor = Color.Tan;
-            labelJenisKelamin.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelJenisKelamin.ForeColor = SystemColors.WindowText;
-            labelJenisKelamin.Location = new Point(731, 159);
-            labelJenisKelamin.Name = "labelJenisKelamin";
-            labelJenisKelamin.Size = new Size(58, 21);
-            labelJenisKelamin.TabIndex = 50;
-            labelJenisKelamin.Text = "None";
-            // 
-            // labelTanggalLahir
-            // 
-            labelTanggalLahir.AutoSize = true;
-            labelTanggalLahir.BackColor = Color.Tan;
-            labelTanggalLahir.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelTanggalLahir.ForeColor = SystemColors.WindowText;
-            labelTanggalLahir.Location = new Point(731, 131);
-            labelTanggalLahir.Name = "labelTanggalLahir";
-            labelTanggalLahir.Size = new Size(58, 21);
-            labelTanggalLahir.TabIndex = 49;
-            labelTanggalLahir.Text = "None";
-            // 
-            // labelTempatLahir
-            // 
-            labelTempatLahir.AutoSize = true;
-            labelTempatLahir.BackColor = Color.Tan;
-            labelTempatLahir.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelTempatLahir.ForeColor = SystemColors.WindowText;
-            labelTempatLahir.Location = new Point(731, 104);
-            labelTempatLahir.Name = "labelTempatLahir";
-            labelTempatLahir.Size = new Size(58, 21);
-            labelTempatLahir.TabIndex = 48;
-            labelTempatLahir.Text = "None";
-            // 
-            // labelNama
-            // 
-            labelNama.AutoSize = true;
-            labelNama.BackColor = Color.Tan;
-            labelNama.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelNama.ForeColor = SystemColors.WindowText;
-            labelNama.Location = new Point(731, 75);
-            labelNama.Name = "labelNama";
-            labelNama.Size = new Size(58, 21);
-            labelNama.TabIndex = 47;
-            labelNama.Text = "None";
-            // 
-            // labelNIK
-            // 
-            labelNIK.AutoSize = true;
-            labelNIK.BackColor = Color.Tan;
-            labelNIK.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelNIK.ForeColor = SystemColors.WindowText;
-            labelNIK.Location = new Point(731, 48);
-            labelNIK.Name = "labelNIK";
-            labelNIK.Size = new Size(58, 21);
-            labelNIK.TabIndex = 46;
-            labelNIK.Text = "None";
-            // 
-            // labelKemiripan
-            // 
-            labelKemiripan.AutoSize = true;
-            labelKemiripan.BackColor = Color.Tan;
-            labelKemiripan.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelKemiripan.ForeColor = SystemColors.WindowText;
-            labelKemiripan.Location = new Point(215, 457);
-            labelKemiripan.Name = "labelKemiripan";
-            labelKemiripan.Size = new Size(20, 21);
-            labelKemiripan.TabIndex = 57;
-            labelKemiripan.Text = "0";
-            // 
-            // labelEksekusi
-            // 
-            labelEksekusi.AutoSize = true;
-            labelEksekusi.BackColor = Color.Tan;
-            labelEksekusi.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            labelEksekusi.ForeColor = SystemColors.WindowText;
-            labelEksekusi.Location = new Point(440, 457);
-            labelEksekusi.Name = "labelEksekusi";
-            labelEksekusi.Size = new Size(20, 21);
-            labelEksekusi.TabIndex = 58;
-            labelEksekusi.Text = "0";
-            // 
-            // label35
-            // 
-            label35.AutoSize = true;
-            label35.BackColor = Color.Tan;
-            label35.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label35.ForeColor = SystemColors.WindowText;
-            label35.Location = new Point(250, 457);
-            label35.Name = "label35";
-            label35.Size = new Size(24, 21);
-            label35.TabIndex = 59;
-            label35.Text = "%";
-            // 
-            // label36
-            // 
-            label36.AutoSize = true;
-            label36.BackColor = Color.Tan;
-            label36.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label36.ForeColor = SystemColors.WindowText;
-            label36.Location = new Point(470, 456);
-            label36.Name = "label36";
-            label36.Size = new Size(34, 21);
-            label36.TabIndex = 60;
-            label36.Text = "ms";
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AntiqueWhite;
             ClientSize = new Size(1577, 894);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
             Controls.Add(label2);
             Controls.Add(pictureBox6);
             Controls.Add(label1);
