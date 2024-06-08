@@ -18,6 +18,8 @@ namespace WinFormsApp1
             const byte asciiRange = asciiEnd - asciiStart + 1;
             return (char)(asciiStart + (intensity * asciiRange / 256));
         }
+
+        // this is a basic image to ascii converter w/o resizing it to be 30px
         public static string ConvertImageToAscii(Image<Bgr, byte> image){
             // Convert to grayscale
             Image<Gray, byte> grayImage = image.Convert<Gray, byte>();

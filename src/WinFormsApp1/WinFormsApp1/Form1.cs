@@ -7,7 +7,7 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
-using Bogus;
+
 using WinFormsApp1.Algorithm;
 using MySql.Data.MySqlClient;
 
@@ -28,13 +28,15 @@ namespace WinFormsApp1
             search1.Click += ButtonSearch1_Click;
             string connectionString = "server=localhost;user id=root;password=password;database=fingerprint";
             Database db = new Database(connectionString);
-            System.Diagnostics.Debug.WriteLine($"DEBUGGGGGGGGGGGGG: BERHASIL ON CONNECTION");
+            Debug.WriteLine($"DEBUGGGGGGGGGGGGG: BERHASIL ON CONNECTION");
 
             fingerprints = new Fingerprints(db);
 
             /// alter table 
             fingerprints.alterTable();
-            GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
+            // Dummy.GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
+        
+            // Load the ascii representation
         }
         // getting the project dir for diff user
         private string GetProjectDirectory()
@@ -45,33 +47,7 @@ namespace WinFormsApp1
         }
 
 
-        private void GenerateDummy(string projectDirectory, Fingerprints fingerprints){
-            string[] imageFiles = Directory.GetFiles(projectDirectory, "*.bmp");
-            Console.WriteLine($"{projectDirectory}");
-            var faker = new Faker();
-            foreach (string imagePath in imageFiles)
-            {
-                string fileName = Path.Combine("test", Path.GetFileName(imagePath));
-                Person person = new Faker().Person;
-                string name = person.FullName;
-                fingerprints.InsertFingerprint(name, fileName);
-                Console.WriteLine($"{name}, {fileName}");
-                
-                string NIK = faker.Random.Number(100000000, 999999999).ToString();
-                string Nama = AlayTranslator.ConvertToAlay(name);
-                string TempatLahir = faker.Address.City();
-                DateTime TanggalLahir = faker.Date.Past(30, DateTime.Now.AddYears(-20));
-                string JenisKelamin = faker.PickRandom(new[] { "Laki-Laki", "Perempuan" });
-                string GolonganDarah = faker.PickRandom(new[] { "A", "B", "AB", "O" });
-                string Alamat = faker.Address.FullAddress();
-                string Agama = faker.PickRandom(new[] { "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu" });
-                string StatusPerkawinan = faker.PickRandom(new[] { "Belum Menikah","Menikah","Cerai"});
-                string Pekerjaan = faker.Name.JobTitle();
-                string Kewarganegaraan = "Indonesian";
-                fingerprints.InsertBiodata(NIK, Nama, TempatLahir, TanggalLahir, JenisKelamin, GolonganDarah, Alamat, Agama, StatusPerkawinan, Pekerjaan, Kewarganegaraan);
-                Console.WriteLine($"{NIK}, {Nama}, {TempatLahir}, {TanggalLahir}, {JenisKelamin}, {GolonganDarah}, {Alamat}, {Agama}, {StatusPerkawinan}, {Pekerjaan}, {Kewarganegaraan}");
-            }
-        }
+
 
 
         // to change toggle button state
@@ -79,12 +55,12 @@ namespace WinFormsApp1
         {
             if (toggle2.Checked)
             {
-                System.Diagnostics.Debug.WriteLine("DEBUG :::::::::: Toggle ON");
+                Debug.WriteLine("DEBUG :::::::::: Toggle ON");
                 toggledon = true;
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("DEBUG :::::::::: Toggle OFF");
+                Debug.WriteLine("DEBUG :::::::::: Toggle OFF");
                 toggledon = false;
             }
         }
@@ -97,8 +73,8 @@ namespace WinFormsApp1
             // Regex find bio that match
             (resultnama, resultpath) = PerformPatternMatching(ascii);
             List<Biodata> bios = fingerprints.GetAllBiodataData();
-            System.Diagnostics.Debug.WriteLine("displaying results..................................");
-            System.Diagnostics.Debug.WriteLine("PATH GAMBAR WOY: "+resultpath);
+            Debug.WriteLine("displaying results..................................");
+            Debug.WriteLine("PATH GAMBAR WOY: "+resultpath);
             if(resultpath != null)
             {
                 Biodata resultbio = null;
@@ -152,7 +128,7 @@ namespace WinFormsApp1
             // Format the elapsed time as a string
             labelEksekusi.Text = stopwatch.ElapsedMilliseconds.ToString();
 
-            System.Diagnostics.Debug.WriteLine("DEBUG Execution Time: " + stopwatch.ElapsedMilliseconds.ToString());
+            Debug.WriteLine("DEBUG Execution Time: " + stopwatch.ElapsedMilliseconds.ToString());
         }
 
         private void ButtonOval2_Click(object sender, EventArgs e)
@@ -164,7 +140,7 @@ namespace WinFormsApp1
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                System.Diagnostics.Debug.WriteLine("DEBUG--------------------- GAMBAR DITERIMA DAN DI LOAD");
+                Debug.WriteLine("DEBUG--------------------- GAMBAR DITERIMA DAN DI LOAD");
                 // Get the selected file name
                 string selectedFileName = openFileDialog.FileName;
 
@@ -174,10 +150,12 @@ namespace WinFormsApp1
 
                 // Load the selected image using Emgu CV
                 Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
-                String asciiInput = Preprocessing.ConvertImageToAscii(image);
-                
+                string asciiInput = Preprocessing.ConvertImageToAscii(image);
+                // ascii = Preprocessing.FindBestAsciiPattern(asciiInput);
+                // Debug.WriteLine("INI ASCI TERDEBEST OK: " + ascii);
 
-                System.Diagnostics.Debug.WriteLine("DEBUG--------------------- PROGRAM SELESAI EKSEKUSI");
+
+                Debug.WriteLine("DEBUG--------------------- PROGRAM SELESAI EKSEKUSI");
             }
         }
 
@@ -186,21 +164,24 @@ namespace WinFormsApp1
         // Will return the nama and image path attribute if found 
         private (string nama, string path) PerformPatternMatching(string pattern)
         {
-            System.Diagnostics.Debug.WriteLine("DEBUG--------------------- MULAI PATTERN MATCHING");
+            Debug.WriteLine("DEBUG--------------------- MULAI PATTERN MATCHING");
             bool found = false;
-            List<string> asciiRepresentations = fingerprints.GetAllBerkasCitra();
+            (List<string> berkasDatabase, List<string> nameDatabase, List<string> asciiDatabase)  = fingerprints.GetAllFingerprintDataSeparated();
             string projectDirectory = GetProjectDirectory();
-            foreach (string asciiRepresentation in asciiRepresentations)
+            int id = 0;
+            foreach (string asciiRepresentation in asciiDatabase)
             {
-                string nama = fingerprints.GetFingerprintByName(asciiRepresentation).Nama;
-                string imagePath = fingerprints.GetFingerprintByName(asciiRepresentation).BerkasCitra;
+                string nama = nameDatabase[id];
+                string imagePath = berkasDatabase[id];
 
                 if (toggledon)
                 {
+                    Debug.WriteLine("Ngecek pake KMP bro");
                     found = KMPAlgorithm.KMPSearch(pattern, asciiRepresentation);
                 }
                 else
                 {
+                    Debug.WriteLine("Ngecek pake BM bro");
                     found = BoyerMooreAlgorithm.BMSearch(pattern, asciiRepresentation);
                 }
 
@@ -209,6 +190,7 @@ namespace WinFormsApp1
                     string imagesDirectory = Path.Combine(projectDirectory, imagePath);
                     return (nama, imagesDirectory);
                 }
+                id ++;
             }
 
             return (null, null);

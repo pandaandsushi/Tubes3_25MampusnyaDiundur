@@ -84,6 +84,32 @@ namespace WinFormsApp1
             return fingerprintList;
         }
 
+        public (List<string>, List<string>, List<string>) GetAllFingerprintDataSeparated()
+        {
+            List<string> fingerprintList_berkas = new();
+            List<string> fingerprintList_nama = new();
+            List<string> fingerprintList_ascii = new();
+
+            db.OpenConnection();
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM sidik_jari", db.GetConnection());
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Fingerprint fingerprint = new Fingerprint{
+                    BerkasCitra = reader.GetString("berkas_citra"),
+                    Nama = reader.GetString("nama"),
+                    Ascii = reader.IsDBNull(reader.GetOrdinal("ascii")) ? null : reader.GetString("ascii")
+                };
+                fingerprintList_berkas.Add(fingerprint.BerkasCitra);
+                fingerprintList_nama.Add(fingerprint.Nama);
+                fingerprintList_ascii.Add(fingerprint.Ascii);
+            }
+
+            db.CloseConnection();
+            return (fingerprintList_berkas, fingerprintList_nama, fingerprintList_ascii);
+        }
+
         public List<string> GetAllBerkasCitra()
         {
             List<string> fingerprintList = new();
@@ -167,10 +193,26 @@ namespace WinFormsApp1
             return biodataList;
         }
 
-        public void alterTable(){
+        public void alterTable()
+        {
             db.OpenConnection();
-            MySqlCommand cmd = new MySqlCommand("ALTER TABLE sidik_jari ADD COLUMN ascii TEXT", db.GetConnection());
-            cmd.ExecuteNonQuery();
+
+            MySqlCommand checkColumnCmd = new MySqlCommand(
+                "SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_NAME = 'sidik_jari' AND COLUMN_NAME = 'ascii'", 
+                db.GetConnection()
+            );
+            int columnExists = Convert.ToInt32(checkColumnCmd.ExecuteScalar());
+            // Column already exists
+            if (columnExists > 0)
+            {
+                System.Diagnostics.Debug.WriteLine("Column 'ascii' already exists in 'sidik_jari' table.");
+            }
+            else
+            {
+                MySqlCommand cmd = new MySqlCommand("ALTER TABLE sidik_jari ADD COLUMN ascii TEXT", db.GetConnection());
+                cmd.ExecuteNonQuery();
+            }
+
             db.CloseConnection();
         }
         public void insertAscii(string nama, string ascii){
