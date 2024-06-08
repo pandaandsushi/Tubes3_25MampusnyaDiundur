@@ -210,10 +210,10 @@ namespace WinFormsApp1
 {
     public static class Preprocessing
     {
-        public static string ConvertBinaryImageToString(Image<Gray, byte> binaryImage)
+        public static string ConvertBinaryImageToString(Image<Gray, byte> optimalBlock)
         {
             // Extract the optimal block around minutiae points
-            Image<Gray, byte> optimalBlock = ExtractOptimalBlock(binaryImage);
+            // Image<Gray, byte> optimalBlock = ExtractOptimalBlock(binaryImage);
 
             // Convert the block to binary string and then to ASCII string
             StringBuilder binaryBlock = new StringBuilder();
@@ -237,21 +237,17 @@ namespace WinFormsApp1
         public static string ConvertBinaryToAscii(string binaryString)
         {
             StringBuilder asciiString = new StringBuilder();
-            string[] lines = binaryString.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-
-            foreach (string line in lines)
-            {
-                for (int i = 0; i < line.Length; i += 8)
-                {
-                    string byteString = line.Substring(i, Math.Min(8, line.Length - i));
-                    if (byteString.Length == 8)
-                    {
-                        byte asciiValue = Convert.ToByte(byteString, 2);
-                        asciiString.Append((char)asciiValue);
-                    }
-                }
-                asciiString.AppendLine();
-            }
+            for (int i = 0; i + 8 <= binaryString.Length; i += 8)
+        {
+            // Extract 8 bits
+            string byteString = binaryString.Substring(i, 8);
+            
+            // Convert to decimal
+            int asciiCode = Convert.ToInt32(byteString, 2);
+            
+            // Convert to ASCII character and append to the result
+            asciiString.Append((char)asciiCode);
+        }
 
             return asciiString.ToString();
         }
@@ -332,8 +328,8 @@ namespace WinFormsApp1
             int minY = points.Min(p => p.Y);
             int maxY = points.Max(p => p.Y);
 
-            int width = Math.Min(30, maxX - minX);
-            int height = Math.Min(30, maxY - minY);
+            int width = Math.Min(56, maxX - minX);
+            int height = Math.Min(56, maxY - minY);
 
             return new Rectangle(minX, minY, width, height);
         }

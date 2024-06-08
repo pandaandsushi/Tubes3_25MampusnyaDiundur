@@ -4,6 +4,6 @@ namespace WinFormsApp1
     {
         public string BerkasCitra { get; set; }
         public string Nama { get; set; }
-        public string AsciiRepresent { get; set; }
+        public string Ascii { get; set; }
     }
 }

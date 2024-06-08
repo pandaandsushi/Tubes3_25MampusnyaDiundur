@@ -92,11 +92,10 @@ namespace WinFormsApp1
             string[] imageFiles = Directory.GetFiles(projectDirectory, "*.bmp");
             Console.WriteLine($"{projectDirectory}");
             var faker = new Faker();
-
             foreach (string imagePath in imageFiles)
             {
                 string fileName = Path.Combine("test", Path.GetFileName(imagePath));
-                Person person = faker.Person;
+                Person person = new Faker().Person;
                 string name = person.FullName;
                 fingerprints.InsertFingerprint(name, fileName);
                 Console.WriteLine($"{name}, {fileName}");
@@ -105,13 +104,13 @@ namespace WinFormsApp1
                 string Nama = AlayTranslator.ConvertToAlay(name);
                 string TempatLahir = faker.Address.City();
                 DateTime TanggalLahir = faker.Date.Past(30, DateTime.Now.AddYears(-20));
-                string JenisKelamin = person.Gender.ToString() == "Female" ? "Perempuan" : "Laki-Laki";
+                string JenisKelamin = faker.PickRandom(new[] { "Laki-Laki", "Perempuan" });
                 string GolonganDarah = faker.PickRandom(new[] { "A", "B", "AB", "O" });
                 string Alamat = faker.Address.FullAddress();
                 string Agama = faker.PickRandom(new[] { "Islam", "Kristen", "Katolik", "Hindu", "Buddha", "Konghucu" });
                 string StatusPerkawinan = faker.PickRandom(new[] { "Belum Menikah","Menikah","Cerai"});
                 string Pekerjaan = faker.Name.JobTitle();
-                string Kewarganegaraan = faker.Address.Country();
+                string Kewarganegaraan = "Indonesian";
                 fingerprints.InsertBiodata(NIK, Nama, TempatLahir, TanggalLahir, JenisKelamin, GolonganDarah, Alamat, Agama, StatusPerkawinan, Pekerjaan, Kewarganegaraan);
                 Console.WriteLine($"{NIK}, {Nama}, {TempatLahir}, {TanggalLahir}, {JenisKelamin}, {GolonganDarah}, {Alamat}, {Agama}, {StatusPerkawinan}, {Pekerjaan}, {Kewarganegaraan}");
             }
@@ -210,30 +209,45 @@ namespace WinFormsApp1
             {
                 System.Diagnostics.Debug.WriteLine("DEBUG--------------------- GAMBAR DITERIMA DAN DI LOAD");
                 // Get the selected file name
-                string selectedFileName = openFileDialog.FileName;
+            string selectedFileName = openFileDialog.FileName;
 
-                // Load the selected image into pictureBox2
-                pictureBox2.Image = Image.FromFile(selectedFileName);
-                pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            // Load the selected image into pictureBox2
+            pictureBox2.Image = Image.FromFile(selectedFileName);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
-                // Load and preprocess the image
-                Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
-                Image<Gray, byte> binaryImage = Preprocessing.PreprocessFingerprint(image);
+            // Load and preprocess the image
+            Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
 
-                // Resize to 240x320 pixels
-                // Image<Gray, byte> resizedImage = binaryImage.Resize(240, 320, Inter.Linear);
-                
-                // Get the ASCII representation of the most optimal 30x30 block
-                string asciiString = Preprocessing.ConvertBinaryImageToString(binaryImage);
-                ascii = asciiString;
+            // Convert to grayscale
+            Image<Gray, byte> grayImage = image.Convert<Gray, byte>();
 
-                // DEBUG SHOW ASCII
-                textBox2.Text = asciiString;
+            // Apply binary threshold
+            Image<Gray, byte> binaryImage = new Image<Gray, byte>(grayImage.Size);
+            CvInvoke.Threshold(grayImage, binaryImage, 127, 255, ThresholdType.Binary);
+
+            // Convert to 0 or 1 per pixel
+            byte[,] binaryArray = new byte[binaryImage.Rows, binaryImage.Cols];
+            for (int y = 0; y < binaryImage.Rows; y++)
+            {
+                for (int x = 0; x < binaryImage.Cols; x++)
+                {
+                    System.Diagnostics.Debug.WriteLine(binaryArray[y, x]);
+                    binaryArray[y, x] = binaryImage.Data[y, x, 0] == 255 ? (byte)1 : (byte)0;
+                }
+            }
+
+            for (int y = 0; y < binaryImage.Rows; y++)
+            {
+                for (int x = 0; x < binaryImage.Cols; x++)
+                {
+                    System.Diagnostics.Debug.WriteLine(binaryArray[y, x]);
+                }
+                System.Diagnostics.Debug.WriteLine("");
+            }
         
                 System.Diagnostics.Debug.WriteLine("DEBUG--------------------- PROGRAM SELESAI EKSEKUSI");
             }
         }
-
         // Will Perform patternmatching algo based on the toggle button
         // Will return the nama and image path attribute if found 
         private (string nama, string path) PerformPatternMatching(string pattern)
