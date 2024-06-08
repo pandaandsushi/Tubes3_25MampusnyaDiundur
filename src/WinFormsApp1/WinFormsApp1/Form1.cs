@@ -37,6 +37,7 @@ namespace WinFormsApp1
             // Dummy.GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
         
             // Load the ascii representation
+            // UpdateDatabaseWithAsciiRepresentation();
         }
         // getting the project dir for diff user
         private string GetProjectDirectory()
@@ -47,7 +48,28 @@ namespace WinFormsApp1
         }
 
 
+        private void UpdateDatabaseWithAsciiRepresentation()
+        {
+            string projectDirectory = GetProjectDirectory();
 
+            (List<string> berkasDatabase, List<string> nameDatabase, List<string> asciiDatabase)  = fingerprints.GetAllFingerprintDataSeparated();
+            int id = 0;
+            foreach (var fingerprint in berkasDatabase)
+            {
+                string imagePath = Path.Combine(projectDirectory, fingerprint);
+                if (File.Exists(imagePath))
+                {
+                    Image<Bgr, byte> image = new Image<Bgr, byte>(imagePath);
+                    string asciiRepresentation = Preprocessing.ConvertImageToAscii(image);
+                    fingerprints.insertAscii(nameDatabase[id], asciiRepresentation);
+                }
+                else
+                {
+                    Console.WriteLine($"Image file {imagePath} not found.");
+                }
+                id++;
+            }
+        }
 
 
         // to change toggle button state
