@@ -18,7 +18,9 @@ namespace WinFormsApp1
     public partial class Form1 : Form
     {
         private bool toggledon; //status toggle button
-        private String ascii;   //ascii text image input yang sudah cropped 30px
+        private String asciibottom;   //ascii text image input yang sudah cropped 30px
+
+        private String asciitop;   //ascii text image input yang sudah cropped 30px
         private String resultnama;  //hasil nama yang didapatkan (asli)
         private String resultpath;  //path fingerprint di db yang paling mirip
         private String fullascii;   //ascii image input fulltext dan tidak dicrop
@@ -37,7 +39,7 @@ namespace WinFormsApp1
 
             /// alter table 
             fingerprints.alterTable();
-            // Dummy.GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
+            Dummy.GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
         
             // Load the ascii representation, preprocessing ascii dan memasukkan ke tabel
             UpdateDatabaseWithAsciiRepresentation();
@@ -64,7 +66,7 @@ namespace WinFormsApp1
                 if (File.Exists(imagePath))
                 {
                     Image<Bgr, byte> image = new Image<Bgr, byte>(imagePath);
-                    string asciiRepresentation = Preprocessing.ConvertImageToAscii(false,image);
+                    (string asciiRepresentation, string empty) = Preprocessing.ConvertImageToAscii(false,image);
                     fingerprints.insertAscii(nameDatabase[id], asciiRepresentation);
                 }
                 else
@@ -99,22 +101,40 @@ namespace WinFormsApp1
             Stopwatch stopwatch = Stopwatch.StartNew();
             float similarity = 0;
             // Regex find bio that match
-            (resultnama, resultpath, similarity) = PerformPatternMatching(ascii);
+            (resultnama, resultpath, similarity) = PerformPatternMatching();
             List<Biodata> bios = fingerprints.GetAllBiodataData();
             Debug.WriteLine("displaying results..................................");
             // Debug.WriteLine("PATH GAMBAR WOY: "+resultpath);
+            bool found = false;
             if(resultpath != null)
             {
                 Biodata resultbio = null;
                 int mindist = int.MaxValue;
-                foreach (var item in bios)
-                {
-                    string purified = AlayTranslator.translateAlay(item.Nama);
-                    int caldist = Levenshtein.calculateSimilarity(resultnama, purified);
-                    if (caldist < mindist)
-                    {
-                        mindist = caldist;
+                foreach (var item in bios){
+                    // KMP
+                    if (toggledon){
+                        found = KMPAlgorithm.KMPSearch(resultnama, item.Nama);
+                    }
+                    // BM
+                    else{
+                        found = BoyerMooreAlgorithm.BMSearch(resultnama, item.Nama);
+                    }
+                    if (found){
+                        Debug.WriteLine("Berhasil nemu nama alay pakai KMP BM");
                         resultbio = item;
+                    }
+                }
+                if(!found){
+                    foreach (var item in bios)
+                    {
+                        Debug.WriteLine("Berhasil nemu nama alay pakai KMP BM");
+                        string purified = AlayTranslator.translateAlay(item.Nama);
+                        int caldist = Levenshtein.calculateSimilarity(resultnama, purified);
+                        if (caldist < mindist)
+                        {
+                            mindist = caldist;
+                            resultbio = item;
+                        }
                     }
                 }
                 pictureBox3.Image = Image.FromFile(resultpath);
@@ -130,7 +150,7 @@ namespace WinFormsApp1
                 labelStatus.Text = resultbio.StatusPerkawinan;
                 labelPekerjaan.Text = resultbio.Pekerjaan;
                 labelKWN.Text = resultbio.Kewarganegaraan;
-                labelKemiripan.Text = similarity.ToString() + "%";
+                labelKemiripan.Text = Math.Round((decimal)similarity,2).ToString() + "%";
             }
             // sidik jari not found, reset display
             else
@@ -179,8 +199,8 @@ namespace WinFormsApp1
 
                 // Load the image
                 Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
-                ascii = Preprocessing.ConvertImageToAscii(true,image);
-                fullascii = Preprocessing.ConvertImageToAscii(false,image);
+                (asciitop, asciibottom) = Preprocessing.ConvertImageToAscii(true,image);
+                (fullascii, string empty) = Preprocessing.ConvertImageToAscii(false,image);
 
                 Debug.WriteLine("DEBUG--------------------- PROGRAM SELESAI EKSEKUSI");
             }
@@ -189,7 +209,7 @@ namespace WinFormsApp1
 
         // Will Perform patternmatching algo based on the toggle button
         // Will return the nama and image path attribute if found 
-        private (string nama, string path, float similarity) PerformPatternMatching(string pattern)
+        private (string nama, string path, float similarity) PerformPatternMatching()
         {
             Debug.WriteLine("DEBUG--------------------- MULAI PATTERN MATCHING");
             bool found = false;
@@ -204,12 +224,22 @@ namespace WinFormsApp1
                 if (toggledon)
                 {
                     Debug.WriteLine("Ngecek pake KMP bro");
-                    found = KMPAlgorithm.KMPSearch(pattern, asciiRepresentation);
+                    Debug.WriteLine("Ngecek pake KMP TOP bro");
+                    found = KMPAlgorithm.KMPSearch(asciitop, asciiRepresentation);
+                    if (!found){
+                        Debug.WriteLine("Ngecek pake KMP BOTTOM bro");
+                        found = KMPAlgorithm.KMPSearch(asciibottom, asciiRepresentation);
+                    }
                 }
                 else
                 {
                     Debug.WriteLine("Ngecek pake BM bro");
-                    found = BoyerMooreAlgorithm.BMSearch(pattern, asciiRepresentation);
+                    Debug.WriteLine("Ngecek pake BM TOP bro");
+                    found = BoyerMooreAlgorithm.BMSearch(asciitop, asciiRepresentation);
+                    if (!found){
+                        Debug.WriteLine("Ngecek pake BM BOTTOM bro");
+                        found = BoyerMooreAlgorithm.BMSearch(asciibottom, asciiRepresentation);
+                    }
                 }
 
                 if (found)
@@ -226,7 +256,6 @@ namespace WinFormsApp1
 
             Debug.WriteLine("----------------------------------------------------");
             Debug.WriteLine("Jumlah element: " + asciiDatabase.Count);
-
             Parallel.For(0, asciiDatabase.Count, i =>
             {
                 int leven = Levenshtein.calculateSimilarity(fullascii, asciiDatabase[i]);
@@ -244,6 +273,9 @@ namespace WinFormsApp1
 
             Debug.WriteLine("----------------------------------------------------");
             Debug.WriteLine("Ini pattern yang kamu pakai sebagai input");
+            // Debug.WriteLine(fullascii);
+            Debug.WriteLine(resultnama);
+            Debug.WriteLine(resultpath);
 
             if (idbest == -1)
             {

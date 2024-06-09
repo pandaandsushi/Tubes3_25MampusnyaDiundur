@@ -59,10 +59,13 @@ namespace WinFormsApp1
         }
 
         // minimal disini menunjukkan apakah kita ingin mengambil size 1x30px dari sebuah image (jadi pattern)
-        public static string ConvertImageToAscii(bool minimal, Image<Bgr, byte> image){
-            Image<Bgr,byte> grayImage = CropTheImage(image);
+        public static (string, string) ConvertImageToAscii(bool minimal, Image<Bgr, byte> image)
+        {
+            Image<Bgr, byte> grayImage = CropTheImage(image);
+
             // Convert each pixel to ASCII
-            if (!minimal){
+            if (!minimal)
+            {
                 System.Diagnostics.Debug.WriteLine("You have chosen to NOT crop the ascii to 30px as a PATTERN");
                 StringBuilder asciiString = new StringBuilder();
                 for (int y = 0; y < grayImage.Rows; y++)
@@ -72,31 +75,38 @@ namespace WinFormsApp1
                         byte intensity = grayImage.Data[y, x, 0]; // Get the intensity value
                         char asciiChar = ConvertIntensityToAsciiChar(intensity); // Convert intensity to ASCII character
                         asciiString.Append(asciiChar);
-
                     }
                     asciiString.AppendLine();
                 }
                 // Output the ASCII string
-                // System.Diagnostics.Debug.Write(asciiString.ToString());
-                return asciiString.ToString();
+                return (asciiString.ToString(), string.Empty);
             }
-            // Ini ngecrop 30 px doang buat si pattern inputnya
-            else{
+            else
+            {
                 System.Diagnostics.Debug.WriteLine("You have chosen to crop the ascii to 30px as a PATTERN");
-                StringBuilder asciioptimal = new StringBuilder();
-                int middleRow = grayImage.Rows / 2;
-                // Center the 30 characters if the image is wider than 30 columns
-                int startCol = Math.Max(0, (grayImage.Cols - 30) / 2); 
                 
+                int row1 = grayImage.Rows / 4;
+                int row3 = 3 * grayImage.Rows / 4;
+
+                // Center the 30 characters if the image is wider than 30 columns
+                int startCol = Math.Max(0, (grayImage.Cols - 30) / 2);
+
+                StringBuilder asciiTop = new StringBuilder();
+                StringBuilder asciiBottom = new StringBuilder();
+
                 for (int x = startCol; x < startCol + 30 && x < grayImage.Cols; x++)
                 {
-                    byte intensity = grayImage.Data[middleRow, x, 0]; // Get the intensity value
-                    char asciiChar = ConvertIntensityToAsciiChar(intensity); // Convert intensity to ASCII character
-                    asciioptimal.Append(asciiChar);
+                    byte intensityTop = grayImage.Data[row1, x, 0]; // Get the intensity value for the top
+                    char asciiCharTop = ConvertIntensityToAsciiChar(intensityTop); // Convert intensity to ASCII character
+                    asciiTop.Append(asciiCharTop);
+
+                    byte intensityBottom = grayImage.Data[row3, x, 0]; // Get the intensity value for the bottom
+                    char asciiCharBottom = ConvertIntensityToAsciiChar(intensityBottom); // Convert intensity to ASCII character
+                    asciiBottom.Append(asciiCharBottom);
                 }
-                // Output the ASCII string
-                // System.Diagnostics.Debug.Write(asciioptimal.ToString());
-                return asciioptimal.ToString();
+
+                // Return the ASCII strings for both sections
+                return (asciiTop.ToString(), asciiBottom.ToString());
             }
         }
 
