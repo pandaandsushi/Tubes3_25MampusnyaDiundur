@@ -7,6 +7,8 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.Util;
+using System.Threading.Tasks;
+
 
 using WinFormsApp1.Algorithm;
 using MySql.Data.MySqlClient;
@@ -15,12 +17,12 @@ namespace WinFormsApp1
 {
     public partial class Form1 : Form
     {
-        private bool toggledon;
-        private String ascii;
-        private String resultnama;
-        private String resultpath;
-        private String fullascii;
-        private readonly Fingerprints fingerprints;
+        private bool toggledon; //status toggle button
+        private String ascii;   //ascii text image input yang sudah cropped 30px
+        private String resultnama;  //hasil nama yang didapatkan (asli)
+        private String resultpath;  //path fingerprint di db yang paling mirip
+        private String fullascii;   //ascii image input fulltext dan tidak dicrop
+        private readonly Fingerprints fingerprints; //data fingerprints yang paling mirip
 
         public Form1()
         {
@@ -37,9 +39,10 @@ namespace WinFormsApp1
             fingerprints.alterTable();
             // Dummy.GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
         
-            // Load the ascii representation
+            // Load the ascii representation, preprocessing ascii dan memasukkan ke tabel
             UpdateDatabaseWithAsciiRepresentation();
         }
+
         // getting the project dir for diff user
         private string GetProjectDirectory()
         {
@@ -88,6 +91,8 @@ namespace WinFormsApp1
             }
         }
 
+        // mulai pencarian dengan algoritma KMP dan BM
+        // jika gagal ditemukan maka akan menggunakan levensthein dist
         private void ButtonSearch1_Click(object sender, EventArgs e)
         {
             // Start the stopwatch for exec time
@@ -168,11 +173,11 @@ namespace WinFormsApp1
                 // Get the selected file name
                 string selectedFileName = openFileDialog.FileName;
 
-                // Load the selected image into pictureBox2
+                // Load the selected image into pictureBox2, display image input
                 pictureBox2.Image = Image.FromFile(selectedFileName);
                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
-                // Load the selected image using Emgu CV
+                // Load the image
                 Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
                 ascii = Preprocessing.ConvertImageToAscii(true,image);
                 fullascii = Preprocessing.ConvertImageToAscii(false,image);
@@ -184,11 +189,11 @@ namespace WinFormsApp1
 
         // Will Perform patternmatching algo based on the toggle button
         // Will return the nama and image path attribute if found 
-        private (string nama, string path, float similariy) PerformPatternMatching(string pattern)
+        private (string nama, string path, float similarity) PerformPatternMatching(string pattern)
         {
             Debug.WriteLine("DEBUG--------------------- MULAI PATTERN MATCHING");
             bool found = false;
-            (List<string> berkasDatabase, List<string> nameDatabase, List<string> asciiDatabase)  = fingerprints.GetAllFingerprintDataSeparated();
+            (List<string> berkasDatabase, List<string> nameDatabase, List<string> asciiDatabase) = fingerprints.GetAllFingerprintDataSeparated();
             string projectDirectory = GetProjectDirectory();
             int id = 0;
             foreach (string asciiRepresentation in asciiDatabase)
@@ -212,29 +217,44 @@ namespace WinFormsApp1
                     string imagesDirectory = Path.Combine(projectDirectory, imagePath);
                     return (nama, imagesDirectory, 100);
                 }
-                id ++;
+                id++;
             }
+
             int mindist = int.MaxValue;
             int idbest = -1;
-            // id = 0;
-            int leven = -1;
+            object lockObject = new object();
+
             Debug.WriteLine("----------------------------------------------------");
             Debug.WriteLine("Jumlah element: " + asciiDatabase.Count);
 
-            for (int i = 0; i<asciiDatabase.Count; i++){
-                leven = Levenshtein.calculateSimilarity(fullascii,asciiDatabase[i]);
-                Debug.WriteLine("KAMU NGECEK LEVEN si: "+ berkasDatabase[i] + ":" +leven);
-                if (leven < mindist){
-                    mindist = leven;
-                    idbest = i;
+            Parallel.For(0, asciiDatabase.Count, i =>
+            {
+                int leven = Levenshtein.calculateSimilarity(fullascii, asciiDatabase[i]);
+                Debug.WriteLine("KAMU NGECEK LEVEN si: " + berkasDatabase[i] + ":" + leven);
+
+                lock (lockObject)
+                {
+                    if (leven < mindist)
+                    {
+                        mindist = leven;
+                        idbest = i;
+                    }
                 }
-            }
+            });
+
             Debug.WriteLine("----------------------------------------------------");
+            Debug.WriteLine("Ini pattern yang kamu pakai sebagai input");
+
+            if (idbest == -1)
+            {
+                return (null, null, 0);
+            }
+
             string levenimagesDirectory = Path.Combine(projectDirectory, berkasDatabase[idbest]);
-            float converteddist = ((asciiDatabase[idbest].Length-leven)/asciiDatabase[idbest].Length)*100;
-            return (nameDatabase[idbest],levenimagesDirectory,converteddist);
-            // return (null, null, 0);
+            float converteddist = ((asciiDatabase[idbest].Length - mindist) / (float)asciiDatabase[idbest].Length) * 100;
+            return (nameDatabase[idbest], levenimagesDirectory, converteddist);
         }
+
 
 
         private void Form1_Load(object sender, EventArgs e)
