@@ -15,7 +15,8 @@
 * [How To Use](#how-to-use) 🪄
 
 ## Brief Overview 
-The program takes as input a fingerprint image that needs to be matched with existing fingerprint images stored in a SQL database. It uses pattern matching algorithms (KMP, BM, and Regular Expression) to compare the input fingerprint image with the database records.
+The program takes a fingerprint image input (.BMP) that needs to be matched with existing fingerprint images stored in a SQL database. It uses pattern matching algorithms (KMP, BM, and Regular Expression) to compare the inputted fingerprint image with the images in the database records.
+The fingerprint database are obtained from https://www.kaggle.com/datasets/ruizgara/socofing.
 
 ## The Algorithms
 Knuth Morris Pratt (KMP)
@@ -33,77 +34,36 @@ Boyer-Moore is another string matching algorithm that efficiently searches for o
 Use the bad character rule to shift the pattern to align the mismatched character with the corresponding character in the text.
 If the mismatched character does not occur in the pattern, use the good suffix rule to determine the maximum shift based on the matched suffix.
 - Continue matching until the end of the text is reached or a complete match is found.
+
 ## Tools and Libraries
 - Visual Studio
-- WinForm
+- WinForms
+- "Anything SQL"
 
 ## Requirements
+- Bogus
+- Emgu
+- NET 8.0
 
+You have to install the requirements above in your Nuget Packages!!
+To install:
+1. Open the solution in Visual Studio
+2. Right click on WinFormsApp1 and select Manage NuGet Packages
+3. Browse the following packages and install all of them, ensure you have all of them applied
+4. You're set!
+
+Also make sure to setup your Visual Studio and SQL ready
 
 ## Setting Up
-- Clone this repository on your terminal `https://github.com/pandaandsushi/Tubes3_25MampusnyaDiundur`
-- Go to the `frontend` directory by using `cd src/frontend`
-- Type in `npm install` to start the server on your local browser
-- If error occurs after npm install, type in `npm install react-d3-graph@2.6.0 --legacy-peer-deps`.
-- Type in `npm start` to start the server on your local browser
-- Open a new terminal, and go to backend dir using `cd src/backend`
-- Type in `go run main.go` to start the server, if your firewall blocks it, select `allow`.
-- You are done :>
+- Clone this repository on your terminal `https://github.com/pandaandsushi/Tubes3_25MampusnyaDiundur` and make sure you have all packages required installed
+- Open Visual Studio and open the solution (WinFormsApp1.sln)
+- Create a SQL database and fill it with the sql file provided `tubes3_stima24.sql` inside the src folder.
+- Click the execute button (green arrow) on the windows top menu
 
-## How to Use
-- Input the start node and end node with words as the Wikipedia title page
-- Choose between using BFS or IDS algorithm
-- Please be patient and the result will be displayed below as a graph
+## How To Use
+- Input your fingerprint image by using the Select Image button
+- Use the toggle button to select algorithm between KMP and BM, default is BM
+- Press the Search button
+- Please wait until the result is displayed 
 
-## File structure
-```
-.
-├── README.md
-├── doc
-│   └── 25MampusnyaDiundur.pdf
-├── src
-│   ├── frontend
-│   │   ├── .gitignore
-│   │   ├── package.json
-│   │   ├── package-lock.json
-│   │   ├── README
-│   │   └── public
-│   │       └── src
-│   │           ├── App.js
-│   │           ├── App.css
-│   │           ├── index.js
-│   │           ├── index.css
-│   │           ├── package-lock.json
-│   │           ├── package.json
-│   │           ├── About
-│   │           │   ├── About.js
-│   │           │   └── About.css
-│   │           ├── Content
-│   │           │   ├── Content.js
-│   │           │   └── Content.css
-│   │           ├── Footer
-│   │           │   ├── footer.js
-│   │           │   └── footer.css
-│   │           ├── GraphComponent
-│   │           │   ├── GraphComponent.js
-│   │           │   └── GraphComponent.css
-│   │           ├── Header
-│   │           │   ├── Header.js
-│   │           │   └── Header.css
-│   │           └── How To Use
-│   │               ├── HTU.js
-│   │               └── HTU.css
-│   ├── backend
-│   │   ├── go.mod
-│   │   ├── go.sum
-│   │   ├── Dockerfile
-│   │   ├── main.go
-│   │   ├── BFS
-│   │   │   ├── BFS.go
-│   │   │   └── BFSfunction.go
-│   │   ├── IDS
-│   │   │   └── ids.go
-│   │   └── Scrape
-│   │       └── scraper.go
-```
 ## Thankyou for trying our program :>
