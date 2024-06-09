@@ -1,35 +1,46 @@
 using System;
 
-namespace WinFormsApp1.Algorithm{
+namespace WinFormsApp1.Algorithm
+{
     public static class Levenshtein
     {
-        public static int calculateSimilarity(string name1, string name2){
-            int name1Length = name1.Length;
-            int name2Length = name2.Length;
-            int[,] distanceMatrix = new int[name1Length + 1, name2Length + 1];
+        public static int calculateSimilarity(string name1, string name2)
+        {
+            int len1 = name1.Length;
+            int len2 = name2.Length;
 
-            if (name1Length == 0) { return name2Length; }
-            if (name2Length == 0) { return name1Length; }
+            // Ada strings kosong
+            if (len1 == 0) return len2;
+            if (len2 == 0) return len1;
 
-            // inisialisasi matrix dengan edit cost dari name1[i] ke name2[j]
-            for (int i = 0; i <= name1Length; i++) { distanceMatrix[i, 0] = i; }
-            for (int j = 1; j <= name2Length; j++) { distanceMatrix[0, j] = j; }
+            // Arrays for the distances
+            int[] previousRow = new int[len2 + 1];
+            int[] currentRow = new int[len2 + 1];
 
-            // mulai hitung edit distance untuk tiap row dan col mulai dari i = 1 dan j = 1
-            for (int i = 1; i <= name1Length; i++)
+            for (int j = 0; j <= len2; j++)
             {
-                for (int j = 1; j <= name2Length; j++)
-                {
-                    int cost = (name1[i - 1] == name2[j - 1] ? 0 : 1);
-                    int insert = distanceMatrix[i, j - 1] + 1;
-                    int delete = distanceMatrix[i - 1, j] + 1;
-                    int replace = distanceMatrix[i - 1, j - 1] + cost;
-
-                    distanceMatrix[i, j] = Math.Min(Math.Min(insert, delete), replace);
-                }
+                previousRow[j] = j;
             }
 
-            return distanceMatrix[name1Length - 1, name2Length - 1];
+            for (int i = 1; i <= len1; i++)
+            {
+                currentRow[0] = i;
+
+                for (int j = 1; j <= len2; j++)
+                {
+                    int insert = previousRow[j] + 1;
+                    int delete = currentRow[j - 1] + 1;
+                    int replace = previousRow[j - 1] + (name1[i - 1] == name2[j - 1] ? 0 : 1);
+
+                    currentRow[j] = Math.Min(Math.Min(insert, delete), replace);
+                }
+
+                var temp = previousRow;
+                previousRow = currentRow;
+                currentRow = temp;
+            }
+
+            return previousRow[len2];
         }
     }
 }

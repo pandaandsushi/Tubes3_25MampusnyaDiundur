@@ -42,8 +42,6 @@ namespace WinFormsApp1
             pictureBox3 = new PictureBox();
             label8 = new Label();
             panel2 = new Panel();
-            label36 = new Label();
-            label35 = new Label();
             labelEksekusi = new Label();
             labelKemiripan = new Label();
             labelKWN = new Label();
@@ -173,7 +171,7 @@ namespace WinFormsApp1
             // toggle2
             // 
             toggle2.AutoSize = true;
-            toggle2.Location = new Point(537, 408);
+            toggle2.Location = new Point(519, 397);
             toggle2.MinimumSize = new Size(20, 10);
             toggle2.Name = "toggle2";
             toggle2.Size = new Size(100, 29);
@@ -194,7 +192,7 @@ namespace WinFormsApp1
             // 
             // search1
             // 
-            search1.Location = new Point(710, 404);
+            search1.Location = new Point(673, 392);
             search1.MinimumSize = new Size(65, 22);
             search1.Name = "search1";
             search1.Size = new Size(146, 34);
@@ -205,9 +203,9 @@ namespace WinFormsApp1
             // pictureBox3
             // 
             pictureBox3.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox3.Location = new Point(657, 349);
+            pictureBox3.Location = new Point(596, 349);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(434, 389);
+            pictureBox3.Size = new Size(391, 389);
             pictureBox3.TabIndex = 16;
             pictureBox3.TabStop = false;
             // 
@@ -217,7 +215,7 @@ namespace WinFormsApp1
             label8.BackColor = Color.Tan;
             label8.Font = new Font("Century Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label8.ForeColor = SystemColors.WindowText;
-            label8.Location = new Point(39, 23);
+            label8.Location = new Point(41, 16);
             label8.Name = "label8";
             label8.Size = new Size(60, 22);
             label8.TabIndex = 17;
@@ -226,8 +224,6 @@ namespace WinFormsApp1
             // panel2
             // 
             panel2.BackColor = Color.Tan;
-            panel2.Controls.Add(label36);
-            panel2.Controls.Add(label35);
             panel2.Controls.Add(labelEksekusi);
             panel2.Controls.Add(labelKemiripan);
             panel2.Controls.Add(labelKWN);
@@ -268,34 +264,10 @@ namespace WinFormsApp1
             panel2.Controls.Add(label8);
             panel2.Controls.Add(search1);
             panel2.Controls.Add(toggle2);
-            panel2.Location = new Point(614, 301);
+            panel2.Location = new Point(550, 301);
             panel2.Name = "panel2";
-            panel2.Size = new Size(910, 491);
+            panel2.Size = new Size(1005, 491);
             panel2.TabIndex = 18;
-            // 
-            // label36
-            // 
-            label36.AutoSize = true;
-            label36.BackColor = Color.Tan;
-            label36.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label36.ForeColor = SystemColors.WindowText;
-            label36.Location = new Point(470, 456);
-            label36.Name = "label36";
-            label36.Size = new Size(34, 21);
-            label36.TabIndex = 60;
-            label36.Text = "ms";
-            // 
-            // label35
-            // 
-            label35.AutoSize = true;
-            label35.BackColor = Color.Tan;
-            label35.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label35.ForeColor = SystemColors.WindowText;
-            label35.Location = new Point(250, 457);
-            label35.Name = "label35";
-            label35.Size = new Size(24, 21);
-            label35.TabIndex = 59;
-            label35.Text = "%";
             // 
             // labelEksekusi
             // 
@@ -303,11 +275,11 @@ namespace WinFormsApp1
             labelEksekusi.BackColor = Color.Tan;
             labelEksekusi.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelEksekusi.ForeColor = SystemColors.WindowText;
-            labelEksekusi.Location = new Point(440, 457);
+            labelEksekusi.Location = new Point(442, 450);
             labelEksekusi.Name = "labelEksekusi";
-            labelEksekusi.Size = new Size(20, 21);
+            labelEksekusi.Size = new Size(49, 21);
             labelEksekusi.TabIndex = 58;
-            labelEksekusi.Text = "0";
+            labelEksekusi.Text = "0 ms";
             // 
             // labelKemiripan
             // 
@@ -315,11 +287,11 @@ namespace WinFormsApp1
             labelKemiripan.BackColor = Color.Tan;
             labelKemiripan.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelKemiripan.ForeColor = SystemColors.WindowText;
-            labelKemiripan.Location = new Point(215, 457);
+            labelKemiripan.Location = new Point(217, 450);
             labelKemiripan.Name = "labelKemiripan";
-            labelKemiripan.Size = new Size(20, 21);
+            labelKemiripan.Size = new Size(39, 21);
             labelKemiripan.TabIndex = 57;
-            labelKemiripan.Text = "0";
+            labelKemiripan.Text = "0 %";
             // 
             // labelKWN
             // 
@@ -327,7 +299,7 @@ namespace WinFormsApp1
             labelKWN.BackColor = Color.Tan;
             labelKWN.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelKWN.ForeColor = SystemColors.WindowText;
-            labelKWN.Location = new Point(731, 320);
+            labelKWN.Location = new Point(673, 313);
             labelKWN.Name = "labelKWN";
             labelKWN.Size = new Size(58, 21);
             labelKWN.TabIndex = 56;
@@ -339,7 +311,7 @@ namespace WinFormsApp1
             labelPekerjaan.BackColor = Color.Tan;
             labelPekerjaan.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelPekerjaan.ForeColor = SystemColors.WindowText;
-            labelPekerjaan.Location = new Point(731, 293);
+            labelPekerjaan.Location = new Point(673, 286);
             labelPekerjaan.Name = "labelPekerjaan";
             labelPekerjaan.Size = new Size(58, 21);
             labelPekerjaan.TabIndex = 55;
@@ -351,7 +323,7 @@ namespace WinFormsApp1
             labelStatus.BackColor = Color.Tan;
             labelStatus.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelStatus.ForeColor = SystemColors.WindowText;
-            labelStatus.Location = new Point(731, 264);
+            labelStatus.Location = new Point(673, 260);
             labelStatus.Name = "labelStatus";
             labelStatus.Size = new Size(58, 21);
             labelStatus.TabIndex = 54;
@@ -363,7 +335,7 @@ namespace WinFormsApp1
             labelAgama.BackColor = Color.Tan;
             labelAgama.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelAgama.ForeColor = SystemColors.WindowText;
-            labelAgama.Location = new Point(731, 242);
+            labelAgama.Location = new Point(673, 234);
             labelAgama.Name = "labelAgama";
             labelAgama.Size = new Size(58, 21);
             labelAgama.TabIndex = 53;
@@ -375,7 +347,7 @@ namespace WinFormsApp1
             labelAlamat.BackColor = Color.Tan;
             labelAlamat.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelAlamat.ForeColor = SystemColors.WindowText;
-            labelAlamat.Location = new Point(731, 215);
+            labelAlamat.Location = new Point(673, 208);
             labelAlamat.Name = "labelAlamat";
             labelAlamat.Size = new Size(58, 21);
             labelAlamat.TabIndex = 52;
@@ -387,7 +359,7 @@ namespace WinFormsApp1
             labelGoldar.BackColor = Color.Tan;
             labelGoldar.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelGoldar.ForeColor = SystemColors.WindowText;
-            labelGoldar.Location = new Point(731, 186);
+            labelGoldar.Location = new Point(673, 179);
             labelGoldar.Name = "labelGoldar";
             labelGoldar.Size = new Size(58, 21);
             labelGoldar.TabIndex = 51;
@@ -399,7 +371,7 @@ namespace WinFormsApp1
             labelJenisKelamin.BackColor = Color.Tan;
             labelJenisKelamin.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelJenisKelamin.ForeColor = SystemColors.WindowText;
-            labelJenisKelamin.Location = new Point(731, 159);
+            labelJenisKelamin.Location = new Point(673, 152);
             labelJenisKelamin.Name = "labelJenisKelamin";
             labelJenisKelamin.Size = new Size(58, 21);
             labelJenisKelamin.TabIndex = 50;
@@ -411,7 +383,7 @@ namespace WinFormsApp1
             labelTanggalLahir.BackColor = Color.Tan;
             labelTanggalLahir.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelTanggalLahir.ForeColor = SystemColors.WindowText;
-            labelTanggalLahir.Location = new Point(731, 131);
+            labelTanggalLahir.Location = new Point(673, 124);
             labelTanggalLahir.Name = "labelTanggalLahir";
             labelTanggalLahir.Size = new Size(58, 21);
             labelTanggalLahir.TabIndex = 49;
@@ -423,7 +395,7 @@ namespace WinFormsApp1
             labelTempatLahir.BackColor = Color.Tan;
             labelTempatLahir.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelTempatLahir.ForeColor = SystemColors.WindowText;
-            labelTempatLahir.Location = new Point(731, 104);
+            labelTempatLahir.Location = new Point(673, 97);
             labelTempatLahir.Name = "labelTempatLahir";
             labelTempatLahir.Size = new Size(58, 21);
             labelTempatLahir.TabIndex = 48;
@@ -435,7 +407,7 @@ namespace WinFormsApp1
             labelNama.BackColor = Color.Tan;
             labelNama.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelNama.ForeColor = SystemColors.WindowText;
-            labelNama.Location = new Point(731, 75);
+            labelNama.Location = new Point(673, 68);
             labelNama.Name = "labelNama";
             labelNama.Size = new Size(58, 21);
             labelNama.TabIndex = 47;
@@ -447,7 +419,7 @@ namespace WinFormsApp1
             labelNIK.BackColor = Color.Tan;
             labelNIK.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelNIK.ForeColor = SystemColors.WindowText;
-            labelNIK.Location = new Point(731, 48);
+            labelNIK.Location = new Point(673, 41);
             labelNIK.Name = "labelNIK";
             labelNIK.Size = new Size(58, 21);
             labelNIK.TabIndex = 46;
@@ -459,7 +431,7 @@ namespace WinFormsApp1
             label32.BackColor = Color.Tan;
             label32.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label32.ForeColor = SystemColors.WindowText;
-            label32.Location = new Point(710, 320);
+            label32.Location = new Point(652, 313);
             label32.Name = "label32";
             label32.Size = new Size(15, 21);
             label32.TabIndex = 45;
@@ -471,7 +443,7 @@ namespace WinFormsApp1
             label33.BackColor = Color.Tan;
             label33.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label33.ForeColor = SystemColors.WindowText;
-            label33.Location = new Point(710, 293);
+            label33.Location = new Point(652, 286);
             label33.Name = "label33";
             label33.Size = new Size(15, 21);
             label33.TabIndex = 44;
@@ -483,7 +455,7 @@ namespace WinFormsApp1
             label34.BackColor = Color.Tan;
             label34.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label34.ForeColor = SystemColors.WindowText;
-            label34.Location = new Point(710, 264);
+            label34.Location = new Point(652, 259);
             label34.Name = "label34";
             label34.Size = new Size(15, 21);
             label34.TabIndex = 43;
@@ -495,7 +467,7 @@ namespace WinFormsApp1
             label28.BackColor = Color.Tan;
             label28.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label28.ForeColor = SystemColors.WindowText;
-            label28.Location = new Point(710, 242);
+            label28.Location = new Point(652, 235);
             label28.Name = "label28";
             label28.Size = new Size(15, 21);
             label28.TabIndex = 42;
@@ -507,7 +479,7 @@ namespace WinFormsApp1
             label29.BackColor = Color.Tan;
             label29.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label29.ForeColor = SystemColors.WindowText;
-            label29.Location = new Point(710, 215);
+            label29.Location = new Point(652, 208);
             label29.Name = "label29";
             label29.Size = new Size(15, 21);
             label29.TabIndex = 41;
@@ -519,7 +491,7 @@ namespace WinFormsApp1
             label30.BackColor = Color.Tan;
             label30.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label30.ForeColor = SystemColors.WindowText;
-            label30.Location = new Point(710, 186);
+            label30.Location = new Point(652, 179);
             label30.Name = "label30";
             label30.Size = new Size(15, 21);
             label30.TabIndex = 40;
@@ -531,7 +503,7 @@ namespace WinFormsApp1
             label31.BackColor = Color.Tan;
             label31.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label31.ForeColor = SystemColors.WindowText;
-            label31.Location = new Point(710, 159);
+            label31.Location = new Point(652, 152);
             label31.Name = "label31";
             label31.Size = new Size(15, 21);
             label31.TabIndex = 39;
@@ -543,7 +515,7 @@ namespace WinFormsApp1
             label26.BackColor = Color.Tan;
             label26.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label26.ForeColor = SystemColors.WindowText;
-            label26.Location = new Point(710, 131);
+            label26.Location = new Point(652, 124);
             label26.Name = "label26";
             label26.Size = new Size(15, 21);
             label26.TabIndex = 38;
@@ -555,7 +527,7 @@ namespace WinFormsApp1
             label27.BackColor = Color.Tan;
             label27.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label27.ForeColor = SystemColors.WindowText;
-            label27.Location = new Point(710, 104);
+            label27.Location = new Point(652, 97);
             label27.Name = "label27";
             label27.Size = new Size(15, 21);
             label27.TabIndex = 37;
@@ -567,7 +539,7 @@ namespace WinFormsApp1
             label25.BackColor = Color.Tan;
             label25.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label25.ForeColor = SystemColors.WindowText;
-            label25.Location = new Point(710, 75);
+            label25.Location = new Point(652, 68);
             label25.Name = "label25";
             label25.Size = new Size(15, 21);
             label25.TabIndex = 36;
@@ -579,12 +551,11 @@ namespace WinFormsApp1
             label24.BackColor = Color.Tan;
             label24.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label24.ForeColor = SystemColors.WindowText;
-            label24.Location = new Point(710, 48);
+            label24.Location = new Point(652, 41);
             label24.Name = "label24";
             label24.Size = new Size(15, 21);
             label24.TabIndex = 35;
             label24.Text = ":";
-            label24.Click += label24_Click;
             // 
             // label20
             // 
@@ -592,7 +563,7 @@ namespace WinFormsApp1
             label20.BackColor = Color.Tan;
             label20.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label20.ForeColor = SystemColors.WindowText;
-            label20.Location = new Point(517, 318);
+            label20.Location = new Point(459, 311);
             label20.Name = "label20";
             label20.Size = new Size(175, 21);
             label20.TabIndex = 34;
@@ -604,7 +575,7 @@ namespace WinFormsApp1
             label21.BackColor = Color.Tan;
             label21.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label21.ForeColor = SystemColors.WindowText;
-            label21.Location = new Point(517, 293);
+            label21.Location = new Point(459, 286);
             label21.Name = "label21";
             label21.Size = new Size(97, 21);
             label21.TabIndex = 33;
@@ -616,7 +587,7 @@ namespace WinFormsApp1
             label22.BackColor = Color.Tan;
             label22.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label22.ForeColor = SystemColors.WindowText;
-            label22.Location = new Point(517, 266);
+            label22.Location = new Point(459, 259);
             label22.Name = "label22";
             label22.Size = new Size(63, 21);
             label22.TabIndex = 32;
@@ -628,7 +599,7 @@ namespace WinFormsApp1
             label23.BackColor = Color.Tan;
             label23.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label23.ForeColor = SystemColors.WindowText;
-            label23.Location = new Point(517, 238);
+            label23.Location = new Point(459, 231);
             label23.Name = "label23";
             label23.Size = new Size(78, 21);
             label23.TabIndex = 31;
@@ -640,7 +611,7 @@ namespace WinFormsApp1
             label19.BackColor = Color.Tan;
             label19.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label19.ForeColor = SystemColors.WindowText;
-            label19.Location = new Point(517, 211);
+            label19.Location = new Point(459, 204);
             label19.Name = "label19";
             label19.Size = new Size(76, 21);
             label19.TabIndex = 30;
@@ -652,7 +623,7 @@ namespace WinFormsApp1
             label18.BackColor = Color.Tan;
             label18.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label18.ForeColor = SystemColors.WindowText;
-            label18.Location = new Point(517, 186);
+            label18.Location = new Point(459, 179);
             label18.Name = "label18";
             label18.Size = new Size(70, 21);
             label18.TabIndex = 29;
@@ -664,7 +635,7 @@ namespace WinFormsApp1
             label17.BackColor = Color.Tan;
             label17.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label17.ForeColor = SystemColors.WindowText;
-            label17.Location = new Point(517, 159);
+            label17.Location = new Point(459, 152);
             label17.Name = "label17";
             label17.Size = new Size(121, 21);
             label17.TabIndex = 28;
@@ -676,7 +647,7 @@ namespace WinFormsApp1
             label16.BackColor = Color.Tan;
             label16.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label16.ForeColor = SystemColors.WindowText;
-            label16.Location = new Point(517, 131);
+            label16.Location = new Point(459, 124);
             label16.Name = "label16";
             label16.Size = new Size(114, 21);
             label16.TabIndex = 27;
@@ -688,7 +659,7 @@ namespace WinFormsApp1
             label15.BackColor = Color.Tan;
             label15.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label15.ForeColor = SystemColors.WindowText;
-            label15.Location = new Point(517, 104);
+            label15.Location = new Point(459, 97);
             label15.Name = "label15";
             label15.Size = new Size(112, 21);
             label15.TabIndex = 26;
@@ -700,7 +671,7 @@ namespace WinFormsApp1
             label14.BackColor = Color.Tan;
             label14.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label14.ForeColor = SystemColors.WindowText;
-            label14.Location = new Point(517, 75);
+            label14.Location = new Point(459, 68);
             label14.Name = "label14";
             label14.Size = new Size(64, 21);
             label14.TabIndex = 25;
@@ -712,7 +683,7 @@ namespace WinFormsApp1
             label13.BackColor = Color.Tan;
             label13.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label13.ForeColor = SystemColors.WindowText;
-            label13.Location = new Point(43, 457);
+            label13.Location = new Point(45, 450);
             label13.Name = "label13";
             label13.Size = new Size(166, 21);
             label13.TabIndex = 24;
@@ -724,7 +695,7 @@ namespace WinFormsApp1
             label12.BackColor = Color.Tan;
             label12.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label12.ForeColor = SystemColors.WindowText;
-            label12.Location = new Point(290, 457);
+            label12.Location = new Point(292, 450);
             label12.Name = "label12";
             label12.Size = new Size(144, 21);
             label12.TabIndex = 23;
@@ -736,12 +707,11 @@ namespace WinFormsApp1
             label9.BackColor = Color.Tan;
             label9.Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.ForeColor = SystemColors.WindowText;
-            label9.Location = new Point(517, 48);
+            label9.Location = new Point(459, 41);
             label9.Name = "label9";
             label9.Size = new Size(39, 21);
             label9.TabIndex = 22;
             label9.Text = "NIK";
-            label9.Click += label9_Click;
             // 
             // pictureBox4
             // 
@@ -751,7 +721,6 @@ namespace WinFormsApp1
             pictureBox4.Size = new Size(661, 136);
             pictureBox4.TabIndex = 19;
             pictureBox4.TabStop = false;
-            pictureBox4.Click += pictureBox4_Click;
             // 
             // label1
             // 
@@ -787,7 +756,6 @@ namespace WinFormsApp1
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // pictureBox5
             // 
@@ -827,7 +795,6 @@ namespace WinFormsApp1
             panel3.Name = "panel3";
             panel3.Size = new Size(1577, 52);
             panel3.TabIndex = 22;
-            panel3.Paint += panel3_Paint;
             // 
             // label11
             // 
@@ -953,7 +920,5 @@ namespace WinFormsApp1
         private Label labelNIK;
         private Label labelKemiripan;
         private Label labelEksekusi;
-        private Label label36;
-        private Label label35;
     }
 }

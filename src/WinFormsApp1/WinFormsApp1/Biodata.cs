@@ -3,7 +3,6 @@ namespace WinFormsApp1
 {
 	public class Biodata
 	{
-        public int Id { get; set; }
         public string NIK { get; set; }
         public string Nama { get; set; }
         public string TempatLahir { get; set; }

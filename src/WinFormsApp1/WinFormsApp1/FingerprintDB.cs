@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using MySql.Data.MySqlClient;
 
 namespace WinFormsApp1
@@ -141,7 +142,6 @@ namespace WinFormsApp1
             {
                 Biodata biodata = new Biodata
                 {
-                    Id = reader.GetInt32("id"),
                     NIK = reader.GetString("NIK"),
                     Nama = reader.GetString("nama"),
                     TempatLahir = reader.GetString("tempat_lahir"),
@@ -173,7 +173,6 @@ namespace WinFormsApp1
             {
                 Biodata biodata = new Biodata
                 {
-                    Id = reader.GetInt32("id"),
                     NIK = reader.GetString("NIK"),
                     Nama = reader.GetString("nama"),
                     TempatLahir = reader.GetString("tempat_lahir"),
@@ -202,15 +201,40 @@ namespace WinFormsApp1
                 db.GetConnection()
             );
             int columnExists = Convert.ToInt32(checkColumnCmd.ExecuteScalar());
-            // Column already exists
+
             if (columnExists > 0)
             {
-                System.Diagnostics.Debug.WriteLine("Column 'ascii' already exists in 'sidik_jari' table.");
+                // Check the data type of the 'ascii' column
+                MySqlCommand checkColumnTypeCmd = new MySqlCommand(
+                    "SELECT DATA_TYPE FROM information_schema.COLUMNS WHERE TABLE_NAME = 'sidik_jari' AND COLUMN_NAME = 'ascii'", 
+                    db.GetConnection()
+                );
+                string dataType = checkColumnTypeCmd.ExecuteScalar().ToString();
+
+                // If the data type is not LONGTEXT, alter the column to LONGTEXT
+                if (dataType.ToUpper() != "LONGTEXT")
+                {
+                    MySqlCommand alterColumnCmd = new MySqlCommand(
+                        "ALTER TABLE sidik_jari MODIFY COLUMN ascii LONGTEXT", 
+                        db.GetConnection()
+                    );
+                    alterColumnCmd.ExecuteNonQuery();
+                    System.Diagnostics.Debug.WriteLine("Column 'ascii' modified to LONGTEXT.");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Column 'ascii' is already LONGTEXT.");
+                }
             }
             else
             {
-                MySqlCommand cmd = new MySqlCommand("ALTER TABLE sidik_jari ADD COLUMN ascii TEXT", db.GetConnection());
-                cmd.ExecuteNonQuery();
+                // Add the 'ascii' column as LONGTEXT if it doesn't exist
+                MySqlCommand addColumnCmd = new MySqlCommand(
+                    "ALTER TABLE sidik_jari ADD COLUMN ascii LONGTEXT", 
+                    db.GetConnection()
+                );
+                addColumnCmd.ExecuteNonQuery();
+                System.Diagnostics.Debug.WriteLine("Column 'ascii' added as LONGTEXT.");
             }
 
             db.CloseConnection();

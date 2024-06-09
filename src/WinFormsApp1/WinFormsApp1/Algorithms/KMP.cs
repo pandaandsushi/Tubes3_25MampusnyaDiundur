@@ -58,7 +58,7 @@ namespace WinFormsApp1.Algorithm {
                 {
                     System.Diagnostics.Debug.WriteLine("PATTERN"+ pattern);
                     System.Diagnostics.Debug.WriteLine("TEXT"+ text);
-                    System.Diagnostics.Debug.WriteLine("Pattern ditemukan pada indeks " + (i-j));
+                    System.Diagnostics.Debug.WriteLine("Pattern ditemukan oleh KMP pada indeks " + (i-j));
                     return true;
                 }
                 else if (i < N && pattern[j] != text[i])
@@ -77,11 +77,5 @@ namespace WinFormsApp1.Algorithm {
             return false;
         }
 
-        // public static void Main()
-        // {
-        //     string text = "ABABDABACDABABCABAB";
-        //     string pattern = "ABABCABAB";
-        //     KMPSearch(pattern, text);
-        // }
     }
 }

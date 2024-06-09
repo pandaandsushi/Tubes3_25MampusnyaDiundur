@@ -19,6 +19,7 @@ namespace WinFormsApp1
         private String ascii;
         private String resultnama;
         private String resultpath;
+        private String fullascii;
         private readonly Fingerprints fingerprints;
 
         public Form1()
@@ -37,7 +38,7 @@ namespace WinFormsApp1
             // Dummy.GenerateDummy(Path.Combine(GetProjectDirectory(), "test"), fingerprints);
         
             // Load the ascii representation
-            // UpdateDatabaseWithAsciiRepresentation();
+            UpdateDatabaseWithAsciiRepresentation();
         }
         // getting the project dir for diff user
         private string GetProjectDirectory()
@@ -60,7 +61,7 @@ namespace WinFormsApp1
                 if (File.Exists(imagePath))
                 {
                     Image<Bgr, byte> image = new Image<Bgr, byte>(imagePath);
-                    string asciiRepresentation = Preprocessing.ConvertImageToAscii(image);
+                    string asciiRepresentation = Preprocessing.ConvertImageToAscii(false,image);
                     fingerprints.insertAscii(nameDatabase[id], asciiRepresentation);
                 }
                 else
@@ -91,12 +92,12 @@ namespace WinFormsApp1
         {
             // Start the stopwatch for exec time
             Stopwatch stopwatch = Stopwatch.StartNew();
-
+            float similarity = 0;
             // Regex find bio that match
-            (resultnama, resultpath) = PerformPatternMatching(ascii);
+            (resultnama, resultpath, similarity) = PerformPatternMatching(ascii);
             List<Biodata> bios = fingerprints.GetAllBiodataData();
             Debug.WriteLine("displaying results..................................");
-            Debug.WriteLine("PATH GAMBAR WOY: "+resultpath);
+            // Debug.WriteLine("PATH GAMBAR WOY: "+resultpath);
             if(resultpath != null)
             {
                 Biodata resultbio = null;
@@ -112,6 +113,7 @@ namespace WinFormsApp1
                     }
                 }
                 pictureBox3.Image = Image.FromFile(resultpath);
+                pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
                 labelNama.Text = resultbio.Nama;
                 labelNIK.Text = resultbio.NIK;
                 labelTempatLahir.Text = resultbio.TempatLahir;
@@ -123,7 +125,7 @@ namespace WinFormsApp1
                 labelStatus.Text = resultbio.StatusPerkawinan;
                 labelPekerjaan.Text = resultbio.Pekerjaan;
                 labelKWN.Text = resultbio.Kewarganegaraan;
-                labelKemiripan.Text = mindist.ToString();
+                labelKemiripan.Text = similarity.ToString() + "%";
             }
             // sidik jari not found, reset display
             else
@@ -142,13 +144,13 @@ namespace WinFormsApp1
                 labelStatus.Text = "None :(";
                 labelPekerjaan.Text = "None :(";
                 labelKWN.Text = "None :(";
-                labelKemiripan.Text = "0";
+                labelKemiripan.Text = "0 %";
             }
 
             stopwatch.Stop();
 
             // Format the elapsed time as a string
-            labelEksekusi.Text = stopwatch.ElapsedMilliseconds.ToString();
+            labelEksekusi.Text = stopwatch.ElapsedMilliseconds.ToString() +" ms";
 
             Debug.WriteLine("DEBUG Execution Time: " + stopwatch.ElapsedMilliseconds.ToString());
         }
@@ -172,10 +174,8 @@ namespace WinFormsApp1
 
                 // Load the selected image using Emgu CV
                 Image<Bgr, byte> image = new Image<Bgr, byte>(selectedFileName);
-                string asciiInput = Preprocessing.ConvertImageToAscii(image);
-                // ascii = Preprocessing.FindBestAsciiPattern(asciiInput);
-                // Debug.WriteLine("INI ASCI TERDEBEST OK: " + ascii);
-
+                ascii = Preprocessing.ConvertImageToAscii(true,image);
+                fullascii = Preprocessing.ConvertImageToAscii(false,image);
 
                 Debug.WriteLine("DEBUG--------------------- PROGRAM SELESAI EKSEKUSI");
             }
@@ -184,7 +184,7 @@ namespace WinFormsApp1
 
         // Will Perform patternmatching algo based on the toggle button
         // Will return the nama and image path attribute if found 
-        private (string nama, string path) PerformPatternMatching(string pattern)
+        private (string nama, string path, float similariy) PerformPatternMatching(string pattern)
         {
             Debug.WriteLine("DEBUG--------------------- MULAI PATTERN MATCHING");
             bool found = false;
@@ -195,7 +195,7 @@ namespace WinFormsApp1
             {
                 string nama = nameDatabase[id];
                 string imagePath = berkasDatabase[id];
-
+                Debug.WriteLine("Kamu ngecek pake algo KMP dan BM sebanyak: " + id);
                 if (toggledon)
                 {
                     Debug.WriteLine("Ngecek pake KMP bro");
@@ -210,48 +210,36 @@ namespace WinFormsApp1
                 if (found)
                 {
                     string imagesDirectory = Path.Combine(projectDirectory, imagePath);
-                    return (nama, imagesDirectory);
+                    return (nama, imagesDirectory, 100);
                 }
                 id ++;
             }
+            int mindist = int.MaxValue;
+            int idbest = -1;
+            // id = 0;
+            int leven = -1;
+            Debug.WriteLine("----------------------------------------------------");
+            Debug.WriteLine("Jumlah element: " + asciiDatabase.Count);
 
-            return (null, null);
+            for (int i = 0; i<asciiDatabase.Count; i++){
+                leven = Levenshtein.calculateSimilarity(fullascii,asciiDatabase[i]);
+                Debug.WriteLine("KAMU NGECEK LEVEN si: "+ berkasDatabase[i] + ":" +leven);
+                if (leven < mindist){
+                    mindist = leven;
+                    idbest = i;
+                }
+            }
+            Debug.WriteLine("----------------------------------------------------");
+            string levenimagesDirectory = Path.Combine(projectDirectory, berkasDatabase[idbest]);
+            float converteddist = ((asciiDatabase[idbest].Length-leven)/asciiDatabase[idbest].Length)*100;
+            return (nameDatabase[idbest],levenimagesDirectory,converteddist);
+            // return (null, null, 0);
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-        }
-
-
-        private void pictureBox4_Click(object sender, EventArgs e)
-        {
-        }
-
-
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label24_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
