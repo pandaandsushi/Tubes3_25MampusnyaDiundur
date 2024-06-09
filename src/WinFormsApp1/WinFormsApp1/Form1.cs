@@ -138,7 +138,7 @@ namespace WinFormsApp1
                 }
                 pictureBox3.Image = Image.FromFile(resultpath);
                 pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-                labelNama.Text = resultbio.Nama;
+                labelNama.Text = resultnama;
                 labelNIK.Text = resultbio.NIK;
                 labelTempatLahir.Text = resultbio.TempatLahir;
                 labelTanggalLahir.Text = resultbio.TanggalLahir.ToString("dd/MM/yyyy");
