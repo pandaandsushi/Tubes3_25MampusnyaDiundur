@@ -12,7 +12,7 @@
 ## Brief Overview 
 The program takes a fingerprint image input (.BMP) that needs to be matched with existing fingerprint images stored in a SQL database. It uses pattern matching algorithms (KMP, BM, and Regular Expression) to compare the inputted fingerprint image with the images in the database records.
 The fingerprint database are obtained from https://www.kaggle.com/datasets/ruizgara/socofing.
-![Our Program](./fingerprinttest.png)
+![Our Program](images/fingerprinttest.png)
 
 ## The Algorithms
 Knuth Morris Pratt (KMP)
