@@ -4,6 +4,8 @@ namespace WinFormsApp1.Algorithm
 {
 	public class AlayTranslator
 	{
+        // pakai regex untuk translate nama alay sesuai aturan tertentu
+        // cases ada pada penggunaan angka untuk huruf vokal, konversi lower dan uppercase
         public static string translateAlay(string input)
         {
             string numPattern = "[14630]";
@@ -25,6 +27,8 @@ namespace WinFormsApp1.Algorithm
 
             return result;
         }
+        
+        // ConvertToAlay untuk dummy data name pada tabel biodata
         public static string ConvertToAlay(string input)
         {
             string result = Regex.Replace(input, "[AIEGoag]", m =>

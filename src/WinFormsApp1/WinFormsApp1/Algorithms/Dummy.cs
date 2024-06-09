@@ -3,6 +3,8 @@ using WinFormsApp1.Algorithm;
 namespace WinFormsApp1{
     public static class Dummy{
 
+        // Kelas dummy buat generate dummy data kalau database masih kosong
+        // Pakai Package Bogus untuk dapatkan macam-macam fake data
         public static void GenerateDummy(string projectDirectory, Fingerprints fingerprints){
             string[] imageFiles = Directory.GetFiles(projectDirectory, "*.bmp");
             Console.WriteLine($"{projectDirectory}");

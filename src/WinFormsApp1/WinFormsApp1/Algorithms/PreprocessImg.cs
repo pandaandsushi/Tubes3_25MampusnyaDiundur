@@ -22,19 +22,19 @@ namespace WinFormsApp1
         // this is a image cropper so we can only obtain the main focus of the image
         public static Image<Bgr, byte> CropTheImage(Image<Bgr, byte> image)
         {
-            // Convert to grayscale
+            // Konversi ke greyscale, siapatahu blm bnw
             Image<Gray, byte> grayImage = image.Convert<Gray, byte>();
 
-            // Apply binary threshold
+            // Pasang threshold
             Image<Gray, byte> binaryImage = new Image<Gray, byte>(grayImage.Size);
             CvInvoke.Threshold(grayImage, binaryImage, 127, 255, ThresholdType.Binary);
 
-            // Find contours
+            // Find contours buat cropping white area yang tidak relevan
             VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
             Mat hierarchy = new Mat();
             CvInvoke.FindContours(binaryImage, contours, hierarchy, RetrType.External, ChainApproxMethod.ChainApproxSimple);
 
-            // Find the largest contour
+            // Cari contour yang terbesar alias area fingerprint
             double maxArea = 0;
             int maxAreaContourIndex = -1;
             for (int i = 0; i < contours.Size; i++)
@@ -47,16 +47,18 @@ namespace WinFormsApp1
                 }
             }
 
-            // Get the bounding rectangle of the largest contour
-            if (maxAreaContourIndex == -1) return image; // No contours found
+            // Cari petak bounds yang ngewakilin area contour
+            
+            // No contours found
+            if (maxAreaContourIndex == -1) return image; 
             Rectangle boundingRect = CvInvoke.BoundingRectangle(contours[maxAreaContourIndex]);
 
-            // Crop the image to the bounding rectangle
+            // Crop the image
             Image<Bgr, byte> croppedImage = image.Copy(boundingRect);
             return croppedImage;
         }
 
-        // this is a basic image to ascii converter w/o resizing it to be 30px
+        // minimal disini menunjukkan apakah kita ingin mengambil size 1x30px dari sebuah image (jadi pattern)
         public static string ConvertImageToAscii(bool minimal, Image<Bgr, byte> image){
             Image<Bgr,byte> grayImage = CropTheImage(image);
             // Convert each pixel to ASCII
@@ -72,7 +74,7 @@ namespace WinFormsApp1
                         asciiString.Append(asciiChar);
 
                     }
-                    asciiString.AppendLine(); // New line after each row
+                    asciiString.AppendLine();
                 }
                 // Output the ASCII string
                 // System.Diagnostics.Debug.Write(asciiString.ToString());

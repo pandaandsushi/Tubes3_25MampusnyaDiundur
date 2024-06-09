@@ -57,13 +57,14 @@ Also make sure to setup your Visual Studio and SQL ready
 ## Setting Up
 - Clone this repository on your terminal `https://github.com/pandaandsushi/Tubes3_25MampusnyaDiundur` and make sure you have all packages required installed
 - Open Visual Studio and open the solution (WinFormsApp1.sln)
-- Create a SQL database and fill it with the sql file provided `tubes3_stima24.sql` inside the src folder.
+- Create a SQL database called `fingerprint` and fill it with the sql file provided `tubes3_stima24.sql` inside the src folder. But you can also use your own sqldump
+- Make sure the connection string database name matches with your database and change the password as your own password.
 - Click the execute button (green arrow) on the windows top menu
 
 ## How To Use
 - Input your fingerprint image by using the Select Image button
 - Use the toggle button to select algorithm between KMP and BM, default is BM
-- Press the Search button
+- Press the Search button to begin the search!
 - Please wait until the result is displayed 
 
 ## Thankyou for trying our program :>

@@ -192,6 +192,9 @@ namespace WinFormsApp1
             return biodataList;
         }
 
+        // alterTable untuk preprocess database dengan menambah atribut baru ascii di tabel sidik_jari
+        // jika sudah ada maka akan diskip
+        // atribut ascii yang ada akan dikonversi ke tipe longtext supaya bisa menampung data fulltext ASCII 
         public void alterTable()
         {
             db.OpenConnection();
