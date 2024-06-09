@@ -11,6 +11,16 @@ namespace WinFormsApp1
         {
             db = database;
         }
+        
+        // Method to check if the sidik_jari table is empty
+        public bool IsFingerprintTableEmpty()
+        {
+            db.OpenConnection();
+            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(*) FROM sidik_jari", db.GetConnection());
+            int count = Convert.ToInt32(cmd.ExecuteScalar());
+            db.CloseConnection();
+            return count == 0;
+        }
 
         public void InsertFingerprint(string nama, string berkas_citra)
         {

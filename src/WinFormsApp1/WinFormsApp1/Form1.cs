@@ -211,50 +211,68 @@ namespace WinFormsApp1
         private (string nama, string path, float similarity) PerformPatternMatching()
         {
             Debug.WriteLine("DEBUG--------------------- MULAI PATTERN MATCHING");
-            bool found = false;
             (List<string> berkasDatabase, List<string> nameDatabase, List<string> asciiDatabase) = fingerprints.GetAllFingerprintDataSeparated();
             string projectDirectory = GetProjectDirectory();
-            int id = 0;
-            foreach (string asciiRepresentation in asciiDatabase)
+
+            object lockObject = new object();
+            bool found = false;
+            string resultNama = null;
+            string resultPath = null;
+
+            // Parallel pattern matching with KMP and BM
+            Parallel.For(0, asciiDatabase.Count, (i, state) =>
             {
-                string nama = nameDatabase[id];
-                string imagePath = berkasDatabase[id];
-                Debug.WriteLine("Kamu ngecek pake algo KMP dan BM sebanyak: " + id);
+                string nama = nameDatabase[i];
+                string imagePath = berkasDatabase[i];
+                bool localFound = false;
+
                 if (toggledon)
                 {
-                    Debug.WriteLine("Ngecek pake KMP bro");
                     Debug.WriteLine("Ngecek pake KMP TOP bro");
-                    found = KMPAlgorithm.KMPSearch(asciitop, asciiRepresentation);
-                    if (!found){
+                    localFound = KMPAlgorithm.KMPSearch(asciitop, asciiDatabase[i]);
+                    if (!localFound)
+                    {
                         Debug.WriteLine("Ngecek pake KMP BOTTOM bro");
-                        found = KMPAlgorithm.KMPSearch(asciibottom, asciiRepresentation);
+                        localFound = KMPAlgorithm.KMPSearch(asciibottom, asciiDatabase[i]);
                     }
                 }
                 else
                 {
-                    Debug.WriteLine("Ngecek pake BM bro");
                     Debug.WriteLine("Ngecek pake BM TOP bro");
-                    found = BoyerMooreAlgorithm.BMSearch(asciitop, asciiRepresentation);
-                    if (!found){
+                    localFound = BoyerMooreAlgorithm.BMSearch(asciitop, asciiDatabase[i]);
+                    if (!localFound)
+                    {
                         Debug.WriteLine("Ngecek pake BM BOTTOM bro");
-                        found = BoyerMooreAlgorithm.BMSearch(asciibottom, asciiRepresentation);
+                        localFound = BoyerMooreAlgorithm.BMSearch(asciibottom, asciiDatabase[i]);
                     }
                 }
 
-                if (found)
+                if (localFound)
                 {
-                    string imagesDirectory = Path.Combine(projectDirectory, imagePath);
-                    return (nama, imagesDirectory, 100);
+                    lock (lockObject)
+                    {
+                        if (!found)
+                        {
+                            found = true;
+                            resultNama = nama;
+                            resultPath = Path.Combine(projectDirectory, imagePath);
+                            state.Stop(); // Stop other parallel iterations since we found a match
+                        }
+                    }
                 }
-                id++;
+            });
+
+            if (found)
+            {
+                return (resultNama, resultPath, 100);
             }
 
+            // If no match is found, use Levenshtein distance
             int mindist = int.MaxValue;
             int idbest = -1;
-            object lockObject = new object();
-
             Debug.WriteLine("----------------------------------------------------");
             Debug.WriteLine("Jumlah element: " + asciiDatabase.Count);
+
             Parallel.For(0, asciiDatabase.Count, i =>
             {
                 int leven = Levenshtein.calculateSimilarity(fullascii, asciiDatabase[i]);
@@ -272,12 +290,10 @@ namespace WinFormsApp1
 
             Debug.WriteLine("----------------------------------------------------");
             Debug.WriteLine("Ini pattern yang kamu pakai sebagai input");
-            Debug.WriteLine(resultnama);
-            Debug.WriteLine(resultpath);
 
             float converteddist = ((asciiDatabase[idbest].Length - mindist) / (float)asciiDatabase[idbest].Length) * 100;
             // Set threshold ke 70, kalau lebih kecil bakal ga ketemu hasilnya
-            if (converteddist<70)
+            if (converteddist < 70)
             {
                 return (null, null, 0);
             }
@@ -285,7 +301,6 @@ namespace WinFormsApp1
             string levenimagesDirectory = Path.Combine(projectDirectory, berkasDatabase[idbest]);
             return (nameDatabase[idbest], levenimagesDirectory, converteddist);
         }
-
 
 
         private void Form1_Load(object sender, EventArgs e)
