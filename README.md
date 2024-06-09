@@ -1,14 +1,9 @@
 # Tubes3_25MampusnyaDiundur
 # Fingerprint Detection Using Pattern Matching
-| Names                     | NIM      |
-| ----------------------    |:--------:|
-| Thea Josephine H          | 13522012 |
-| Kayla Namira M            | 13522050 |
-| Diana Tri Handayani       | 13522104 |
 
 ## Table of Contents 💫
 * [Brief Overview](#brief-overview) 👾 
-* [The Algorithm](#the-algorithm) 👾 
+* [The Algorithms](#the-algorithms) 👾 
 * [Tools](#tools-and-libraries) 🔨
 * [Requirements](#requirements) 🫧
 * [Setting Up](#setting-up) 🍀
@@ -17,6 +12,7 @@
 ## Brief Overview 
 The program takes a fingerprint image input (.BMP) that needs to be matched with existing fingerprint images stored in a SQL database. It uses pattern matching algorithms (KMP, BM, and Regular Expression) to compare the inputted fingerprint image with the images in the database records.
 The fingerprint database are obtained from https://www.kaggle.com/datasets/ruizgara/socofing.
+![Our Program](fingerprinttest.jpg)
 
 ## The Algorithms
 Knuth Morris Pratt (KMP)
@@ -68,3 +64,9 @@ Also make sure to setup your Visual Studio and SQL ready
 - Please wait until the result is displayed 
 
 ## Thankyou for trying our program :>
+
+| Names                     | NIM      |
+| ----------------------    |:--------:|
+| Diana Tri Handayani       | 13522104 |
+| Thea Josephine H          | 13522012 |
+| Kayla Namira M            | 13522050 |
