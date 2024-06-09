@@ -16,6 +16,7 @@ namespace WinFormsApp1.Algorithm
                     case "4": return "a";
                     case "6": return "g";
                     case "3": return "e";
+                    case "5": return "s";
                     case "0": return "o";
                     default: return m.Value;
                 }

@@ -19,7 +19,6 @@ namespace WinFormsApp1
     {
         private bool toggledon; //status toggle button
         private String asciibottom;   //ascii text image input yang sudah cropped 30px
-
         private String asciitop;   //ascii text image input yang sudah cropped 30px
         private String resultnama;  //hasil nama yang didapatkan (asli)
         private String resultpath;  //path fingerprint di db yang paling mirip
@@ -31,9 +30,9 @@ namespace WinFormsApp1
             InitializeComponent();
             buttonOval2.Click += ButtonOval2_Click;
             search1.Click += ButtonSearch1_Click;
+            // JANGAN LUPA SESUAIKAN CONNECTION STRING DENGAN DB KAMU
             string connectionString = "server=localhost;user id=root;password=password;database=fingerprint";
             Database db = new Database(connectionString);
-            Debug.WriteLine($"DEBUGGGGGGGGGGGGG: BERHASIL ON CONNECTION");
 
             fingerprints = new Fingerprints(db);
 
@@ -273,17 +272,17 @@ namespace WinFormsApp1
 
             Debug.WriteLine("----------------------------------------------------");
             Debug.WriteLine("Ini pattern yang kamu pakai sebagai input");
-            // Debug.WriteLine(fullascii);
             Debug.WriteLine(resultnama);
             Debug.WriteLine(resultpath);
 
-            if (idbest == -1)
+            float converteddist = ((asciiDatabase[idbest].Length - mindist) / (float)asciiDatabase[idbest].Length) * 100;
+            // Set threshold ke 70, kalau lebih kecil bakal ga ketemu hasilnya
+            if (converteddist<70)
             {
                 return (null, null, 0);
             }
 
             string levenimagesDirectory = Path.Combine(projectDirectory, berkasDatabase[idbest]);
-            float converteddist = ((asciiDatabase[idbest].Length - mindist) / (float)asciiDatabase[idbest].Length) * 100;
             return (nameDatabase[idbest], levenimagesDirectory, converteddist);
         }
 
